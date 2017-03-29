@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head th:fragment="site-head">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Motivation Network</title>
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    </head>
+    <body>
+
+        <header th:fragment="site-header">
+            <nav class="navbar navbar-toggleable-md bg-info navbar-inverse">
+                <div class="container">
+                    <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mainNav">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link active" href="/">Home</a>
+                            <a class="nav-item nav-link" href="#">Quotes</a>
+                            <a class="nav-item nav-link" href="#">Pictures</a>
+                            <a class="nav-item nav-link" href="#">Stories</a>
+                            <a sec:authorize="isAnonymous()" class="nav-item nav-link" href="/login">Login</a>
+                            <a sec:authorize="isAnonymous()" class="nav-item nav-link" href="/register">Register</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="/logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="jumbotron jumbotron-fluid bg-info text-white text-center">
+                <div class="container">
+                    <h1 class="display-2">Motivation Network</h1>
+                    <p class="lead">Motivation and Inspiration when you need it</p>
+                </div>
+            </div>
+        </header>
+
+        <footer th:fragment="site-footer">
+            &copy; Motivation Network, 2017
+            <script th:src="@{/jquery/jquery.min.js}"></script>
+            <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        </footer>
+    </body>
+</html>
