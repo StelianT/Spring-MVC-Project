@@ -1,4 +1,4 @@
-package com.motivation.models;
+package com.motivation.models.bindingModels;
 
 import com.motivation.annotations.IsPasswordsMatching;
 

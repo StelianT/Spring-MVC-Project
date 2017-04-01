@@ -3,7 +3,7 @@ package com.motivation.servicesImpl;
 import com.motivation.config.Errors;
 import com.motivation.customExceptions.UsernameIsInUseException;
 import com.motivation.entities.User;
-import com.motivation.models.RegistrationModel;
+import com.motivation.models.bindingModels.RegistrationModel;
 import com.motivation.repository.UserRepository;
 import com.motivation.services.UserService;
 import org.modelmapper.ModelMapper;

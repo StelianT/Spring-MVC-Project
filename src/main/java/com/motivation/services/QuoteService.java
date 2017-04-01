@@ -1,7 +1,13 @@
 package com.motivation.services;
 
-/**
- * Created by steliyan on 01.04.17.
- */
+import com.motivation.models.bindingModels.AddQuoteBindingModel;
+import com.motivation.models.viewModels.QuoteViewModel;
+
+import java.util.List;
+
 public interface QuoteService {
+
+    void save(AddQuoteBindingModel addQuoteBindingModel);
+
+    List<QuoteViewModel> findAllQuotes();
 }

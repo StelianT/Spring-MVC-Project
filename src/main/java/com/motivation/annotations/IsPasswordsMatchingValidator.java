@@ -1,6 +1,6 @@
 package com.motivation.annotations;
 
-import com.motivation.models.RegistrationModel;
+import com.motivation.models.bindingModels.RegistrationModel;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

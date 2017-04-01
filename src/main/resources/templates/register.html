@@ -27,7 +27,7 @@
                 <input type="password" class="form-control form-control-danger" id="inputConfirmPassword" th:field="*{confirmPassword}"/>
                 <div class="form-control-feedback" th:if="${passwordsNotMatching != null}" th:text="${passwordsNotMatching}">Password is not matching</div>
             </div>
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" class="btn btn-success" value="Register"/>
         </form>
     </div>
 

@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head" />
 <body>
+<header th:replace="layout :: site-header" />
 
+<a href="/quotes/add">Add Quote</a>
+
+<div class="card" th:each="quote : ${quotes}" th:object="${quote}">
+    <div class="card-header">
+        Quote
+    </div>
+    <div class="card-block">
+        <blockquote class="card-blockquote">
+            <p th:text="*{content}"></p>
+            <footer th:text="*{author}"></footer>
+        </blockquote>
+    </div>
+</div>
+
+<footer th:replace="layout :: site-footer" />
 </body>
 </html>

@@ -17,7 +17,7 @@
                     <div class="collapse navbar-collapse" id="mainNav">
                         <div class="navbar-nav">
                             <a class="nav-item nav-link active" href="/">Home</a>
-                            <a class="nav-item nav-link" href="#">Quotes</a>
+                            <a class="nav-item nav-link" href="/quotes">Quotes</a>
                             <a class="nav-item nav-link" href="#">Pictures</a>
                             <a class="nav-item nav-link" href="#">Stories</a>
                             <a sec:authorize="isAnonymous()" class="nav-item nav-link" href="/login">Login</a>
@@ -36,7 +36,7 @@
             </div>
         </header>
 
-        <footer th:fragment="site-footer">
+        <footer th:fragment="site-footer" class="text-center">
             &copy; Motivation Network, 2017
             <script th:src="@{/jquery/jquery.min.js}"></script>
             <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>

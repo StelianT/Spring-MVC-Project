@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and()
                 .rememberMe()
-                .rememberMeCookieName("RememberMeFromLecture")
+                .rememberMeCookieName("RememberMe")
                 .rememberMeParameter("rememberMe")
                 .and()
                 .logout().logoutSuccessUrl("/login?logout").permitAll()
