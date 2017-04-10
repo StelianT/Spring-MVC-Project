@@ -1,9 +1,11 @@
 package com.motivation.controllers;
 
+import com.motivation.entities.User;
 import com.motivation.models.bindingModels.AddQuoteBindingModel;
 import com.motivation.models.viewModels.QuoteViewModel;
 import com.motivation.services.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +19,12 @@ import java.util.List;
 @RequestMapping("/quotes")
 public class QuoteController {
 
+    private final QuoteService quoteService;
+
     @Autowired
-    private QuoteService quoteService;
+    public QuoteController(QuoteService quoteService) {
+        this.quoteService = quoteService;
+    }
 
     @GetMapping("")
     public String getQuoteHomePage(Model model) {
@@ -35,6 +41,9 @@ public class QuoteController {
 
     @PostMapping("/add")
     public String addQuote(@ModelAttribute AddQuoteBindingModel addQuoteBindingModel) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        addQuoteBindingModel.setAddedBy((User) principal);
 
         this.quoteService.save(addQuoteBindingModel);
 

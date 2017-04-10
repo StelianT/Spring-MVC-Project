@@ -1,6 +1,7 @@
 package com.motivation.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -17,9 +18,20 @@ public class Quote {
 
     private String color;
 
+    @ManyToOne
+    @JoinColumn(name = "added_by_id", updatable=false)
     private User addedBy;
 
-//    private Set<User> likedBy;
+    public Quote() {
+    }
+
+    public Quote(String content, String author, String color, User addedBy) {
+        this();
+        this.content = content;
+        this.author = author;
+        this.color = color;
+        this.addedBy = addedBy;
+    }
 
     public long getId() {
         return id;
@@ -52,14 +64,6 @@ public class Quote {
     public void setAddedBy(User addedBy) {
         this.addedBy = addedBy;
     }
-
-//    public Set<User> getLikedBy() {
-//        return likedBy;
-//    }
-//
-//    public void setLikedBy(Set<User> likedBy) {
-//        this.likedBy = likedBy;
-//    }
 
     public String getColor() {
         return color;

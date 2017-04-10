@@ -4,17 +4,29 @@
 <body>
 <header th:replace="layout :: site-header" />
 
-<a href="/quotes/add">Add Quote</a>
+<div style="text-align:center" class="mb-5">
+    <a href="/quotes/add">
+        <button type="button" class="btn btn-primary">Add Quote</button>
+    </a>
+</div>
 
-<div class="card" th:each="quote : ${quotes}" th:object="${quote}">
-    <div class="card-header">
-        Quote
-    </div>
-    <div class="card-block">
-        <blockquote class="card-blockquote">
-            <p th:text="*{content}"></p>
-            <footer th:text="*{author}"></footer>
-        </blockquote>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mb-4" th:each="quote : ${quotes}" th:object="${quote}">
+            <div class="card">
+                <div class="card-header">
+                    Quote
+                </div>
+                <div class="card-block">
+                    <blockquote class="card-blockquote">
+                        <p th:text="*{content}"></p>
+                        <footer class="text-right" th:text="*{author}"></footer>
+                    </blockquote>
+                    <span>Added By: </span>
+                    <span th:text="*{addedByUsername}"></span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -1,5 +1,7 @@
 package com.motivation.models.bindingModels;
 
+import com.motivation.entities.User;
+
 public class AddQuoteBindingModel {
 
     private String content;
@@ -7,6 +9,11 @@ public class AddQuoteBindingModel {
     private String author;
 
     private String color;
+
+    private User addedBy;
+
+    public AddQuoteBindingModel() {
+    }
 
     public String getContent() {
         return content;
@@ -30,5 +37,13 @@ public class AddQuoteBindingModel {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public User getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(User addedBy) {
+        this.addedBy = addedBy;
     }
 }

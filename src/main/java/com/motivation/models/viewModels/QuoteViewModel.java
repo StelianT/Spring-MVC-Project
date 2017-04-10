@@ -8,6 +8,8 @@ public class QuoteViewModel {
 
     private String color;
 
+    private String addedByUsername;
+
     public QuoteViewModel() {
     }
 
@@ -33,5 +35,13 @@ public class QuoteViewModel {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getAddedByUsername() {
+        return addedByUsername;
+    }
+
+    public void setAddedByUsername(String addedByUsername) {
+        this.addedByUsername = addedByUsername;
     }
 }

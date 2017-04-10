@@ -4,7 +4,7 @@
 <body>
 <header th:replace="layout :: site-header" />
 <div class="container">
-    <form method="post" th:object="${addQuoteBindingModel}">
+    <form class="col-sm-6" method="post" th:object="${addQuoteBindingModel}">
         <div class="form-group row">
             <label for="quote" class="col-2 col-form-label">Quote</label>
             <div class="col-10">
@@ -20,10 +20,10 @@
         <div class="form-group row">
             <label for="color" class="col-2 col-form-label">Color</label>
             <div class="col-10">
-                <input class="form-control" type="color" id="color" th:field="*{color}" />
+                <input type="color" id="color" th:field="*{color}" />
             </div>
         </div>
-        <input type="submit" class="btn btn-success" value="Add Quote"/>
+        <input type="submit" class="btn btn-primary" value="Add Quote"/>
     </form>
 </div>
 
