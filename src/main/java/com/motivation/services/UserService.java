@@ -8,5 +8,7 @@ public interface UserService extends UserDetailsService {
 
     void register(RegistrationModel registrationModel) throws UsernameIsInUseException;
 
+    Long getUserIdByUsername(String username);
 
+    String getFullNameByUsername(String username);
 }

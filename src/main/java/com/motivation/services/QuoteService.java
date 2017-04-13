@@ -10,4 +10,6 @@ public interface QuoteService {
     void save(AddQuoteBindingModel addQuoteBindingModel);
 
     List<QuoteViewModel> findAllQuotes();
+
+    List<QuoteViewModel> findAllQuotesByUserId(Long userId);
 }

@@ -16,10 +16,12 @@
                     </button>
                     <div class="collapse navbar-collapse" id="mainNav">
                         <div class="navbar-nav">
-                            <a class="nav-item nav-link active" href="/">Home</a>
-                            <a class="nav-item nav-link" href="/quotes">Quotes</a>
-                            <a class="nav-item nav-link" href="#">Pictures</a>
-                            <a class="nav-item nav-link" href="#">Stories</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}" href="/">Home</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/quotes' ? 'active':''}" href="/quotes">Quotes</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="#">Pictures</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="#">Stories</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="#">Places</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}" href="/user">User</a>
                             <a sec:authorize="isAnonymous()" class="nav-item nav-link" href="/login">Login</a>
                             <a sec:authorize="isAnonymous()" class="nav-item nav-link" href="/register">Register</a>
                             <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="/logout">Logout</a>

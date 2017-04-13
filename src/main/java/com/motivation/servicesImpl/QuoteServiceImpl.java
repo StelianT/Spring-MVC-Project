@@ -47,4 +47,16 @@ public class QuoteServiceImpl implements QuoteService {
 
         return models;
     }
+
+    @Override
+    public List<QuoteViewModel> findAllQuotesByUserId(Long userId) {
+        List<QuoteViewModel> models = new ArrayList<>();
+        List<Quote> quotes = this.quoteRepository.findAllByAddedById(userId);
+        for (Quote quote : quotes) {
+            QuoteViewModel model = this.modelMapper.map(quote, QuoteViewModel.class);
+            models.add(model);
+        }
+
+        return models;
+    }
 }

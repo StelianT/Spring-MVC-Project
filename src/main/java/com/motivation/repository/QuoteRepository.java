@@ -13,4 +13,6 @@ public interface QuoteRepository extends CrudRepository<Quote, Long> {
 
     @Query(value = "SELECT q FROM Quote AS q")
     List<Quote> findAll();
+
+    List<Quote> findAllByAddedById(Long userId);
 }
