@@ -9,6 +9,9 @@ import com.motivation.repository.UserRepository;
 import com.motivation.services.QuoteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,5 +61,19 @@ public class QuoteServiceImpl implements QuoteService {
         }
 
         return models;
+    }
+
+    @Override
+    public Page<QuoteViewModel> findAllQuotes(Pageable pageable) {
+        Page<Quote> quotes = this.quoteRepository.findAll(pageable);
+        List<QuoteViewModel> quoteViewModels = new ArrayList<>();
+        for (Quote quote : quotes) {
+            QuoteViewModel quoteViewModel = this.modelMapper.map(quote, QuoteViewModel.class);
+            quoteViewModels.add(quoteViewModel);
+        }
+
+        Page<QuoteViewModel> quoteModels = new PageImpl<>(quoteViewModels, pageable,
+                                                                        quotes.getTotalElements());
+        return quoteModels;
     }
 }

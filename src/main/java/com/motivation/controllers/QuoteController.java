@@ -5,6 +5,9 @@ import com.motivation.models.bindingModels.AddQuoteBindingModel;
 import com.motivation.models.viewModels.QuoteViewModel;
 import com.motivation.services.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,10 +30,14 @@ public class QuoteController {
     }
 
     @GetMapping("")
-    public String getQuoteHomePage(Model model) {
+    public String getQuoteHomePage(Model model, @PageableDefault(size = 2) Pageable pageable) {
 
-        List<QuoteViewModel> quotes = this.quoteService.findAllQuotes();
+//        List<QuoteViewModel> quotes = this.quoteService.findAllQuotes();
+//        model.addAttribute("quotes", quotes);
+
+        Page<QuoteViewModel> quotes = this.quoteService.findAllQuotes(pageable);
         model.addAttribute("quotes", quotes);
+
         return "quotes";
     }
 

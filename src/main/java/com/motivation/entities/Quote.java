@@ -2,6 +2,7 @@ package com.motivation.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,11 +19,15 @@ public class Quote {
 
     private String color;
 
+    @ManyToMany(mappedBy = "likedQuotes")
+    private Set<User> likedBy;
+
     @ManyToOne
     @JoinColumn(name = "added_by_id", updatable=false)
     private User addedBy;
 
     public Quote() {
+        this.likedBy = new HashSet<>();
     }
 
     public Quote(String content, String author, String color, User addedBy) {
@@ -71,5 +76,13 @@ public class Quote {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public Set<User> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(Set<User> likedBy) {
+        this.likedBy = likedBy;
     }
 }

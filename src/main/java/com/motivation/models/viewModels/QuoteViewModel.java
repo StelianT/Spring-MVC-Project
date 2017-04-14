@@ -1,5 +1,9 @@
 package com.motivation.models.viewModels;
 
+import com.motivation.entities.User;
+
+import java.util.Set;
+
 public class QuoteViewModel {
 
     private String content;
@@ -9,6 +13,8 @@ public class QuoteViewModel {
     private String color;
 
     private String addedByUsername;
+
+    private Set<String> userIdUsername;
 
     public QuoteViewModel() {
     }
@@ -43,5 +49,13 @@ public class QuoteViewModel {
 
     public void setAddedByUsername(String addedByUsername) {
         this.addedByUsername = addedByUsername;
+    }
+
+    public Set<String> getUserIdUsername() {
+        return userIdUsername;
+    }
+
+    public void setUserIdUsername(Set<String> userIdUsername) {
+        this.userIdUsername = userIdUsername;
     }
 }

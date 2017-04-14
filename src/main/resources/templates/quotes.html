@@ -24,11 +24,24 @@
                     </blockquote>
                     <span>Added By: </span>
                     <span th:text="*{addedByUsername}"></span>
+                    <div th:each="user : ${userIdUsername}">
+                        <div th:text="${user}"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="!${quotes.hasPrevious()} ? 'disabled'"><a class="page-link" href="#" th:href="${quotes.hasPrevious()} ? '/quotes?page=' + ${quotes.previousPageable().getPageNumber()}">Previous</a></li>
+        <li class="page-item" th:each="i : ${#numbers.sequence(0, quotes.getTotalPages() - 1)}">
+            <a class="page-link" href="#" th:href="|/quotes?page=${i}|" th:text="${i + 1}">1</a>
+        </li>
+        <li class="page-item" th:classappend="!${quotes.hasNext()} ? 'disabled'"><a class="page-link" href="#" th:href="${quotes.hasNext()} ? '/quotes?page=' + ${quotes.nextPageable().getPageNumber()}">Next</a></li>
+    </ul>
+</nav>
 
 <footer th:replace="layout :: site-footer" />
 </body>
