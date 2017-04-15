@@ -2,9 +2,12 @@ package com.motivation.servicesImpl;
 
 import com.motivation.config.Errors;
 import com.motivation.customExceptions.UsernameIsInUseException;
+import com.motivation.entities.BasicUser;
 import com.motivation.entities.User;
 import com.motivation.models.bindingModels.RegistrationModel;
+import com.motivation.repository.BasicUserRepository;
 import com.motivation.repository.UserRepository;
+import com.motivation.services.BasicUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,18 +18,18 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class UserService implements UserService {
+public class BasicUserServiceImpl implements BasicUserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final UserRepository userRepository;
+    private final BasicUserRepository userRepository;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder,
-                       UserRepository userRepository,
-                       ModelMapper modelMapper) {
+    public BasicUserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder,
+                                BasicUserRepository userRepository,
+                                ModelMapper modelMapper) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -39,7 +42,7 @@ public class UserService implements UserService {
             throw new UsernameIsInUseException("A user with this username already exists");
         }
 
-        User user = this.modelMapper.map(registrationModel, User.class);
+        BasicUser user = this.modelMapper.map(registrationModel, BasicUser.class);
         String encryptedPassword = this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
         user.setPassword(encryptedPassword);
         user.setAccountNonExpired(true);

@@ -4,7 +4,7 @@ import com.motivation.customExceptions.UsernameIsInUseException;
 import com.motivation.models.bindingModels.RegistrationModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends UserDetailsService {
+public interface BasicUserService extends UserDetailsService {
 
     void register(RegistrationModel registrationModel) throws UsernameIsInUseException;
 

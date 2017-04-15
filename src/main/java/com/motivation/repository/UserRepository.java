@@ -3,10 +3,11 @@ package com.motivation.repository;
 import com.motivation.entities.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+@NoRepositoryBean
+public interface UserRepository<T extends User> extends CrudRepository<T, Long> {
 
-    User findOneByUsername(String username);
+    T findOneByUsername(String username);
 }

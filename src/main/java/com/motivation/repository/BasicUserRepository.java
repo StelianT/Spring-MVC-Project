@@ -1,7 +1,8 @@
 package com.motivation.repository;
 
-/**
- * Created by stelt on 14/04/2017.
- */
-public class BasicUserRepository {
+import com.motivation.entities.BasicUser;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BasicUserRepository extends UserRepository<BasicUser> {
 }

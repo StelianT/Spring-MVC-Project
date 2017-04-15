@@ -5,7 +5,7 @@ import com.motivation.customExceptions.UsernameIsInUseException;
 import com.motivation.models.bindingModels.RegistrationModel;
 import com.motivation.models.viewModels.QuoteViewModel;
 import com.motivation.services.QuoteService;
-import com.motivation.services.UserService;
+import com.motivation.services.BasicUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +22,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private final UserService userService;
-
-    private final QuoteService quoteService;
+    private final BasicUserService userService;
 
     @Autowired
-    public UserController(UserService userService, QuoteService quoteService) {
+    public UserController(BasicUserService userService) {
         this.userService = userService;
-        this.quoteService = quoteService;
     }
 
     @GetMapping("/register")
@@ -60,17 +57,5 @@ public class UserController {
         }
 
         return "login";
-    }
-
-    @GetMapping("/user")
-    public String getUserPage(Model model, Principal principal){
-        String username = principal.getName();
-        Long userId = this.userService.getUserIdByUsername(username);
-        String fullName = this.userService.getFullNameByUsername(username);
-
-        List<QuoteViewModel> quotes = this.quoteService.findAllQuotesByUserId(userId);
-        model.addAttribute("quotes", quotes);
-        model.addAttribute("fullName", fullName);
-        return "user";
     }
 }

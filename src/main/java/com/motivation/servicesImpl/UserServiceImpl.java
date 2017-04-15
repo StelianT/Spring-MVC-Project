@@ -1,24 +1,26 @@
 package com.motivation.servicesImpl;
 
+import com.motivation.entities.User;
 import com.motivation.repository.AbstractUserRepository;
 import com.motivation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements com.motivation.services.UserService {
+public class UserServiceImpl implements com.motivation.services.UserService {
 
     @Autowired
     private AbstractUserRepository abstractUserRepository;
 
-
     @Override
     public Long getUserIdByUsername(String username) {
-        return null;
+        User user = abstractUserRepository.findOneByUsername(username);
+        return user.getId();
     }
 
     @Override
     public String getFullNameByUsername(String username) {
-        return null;
+        User user = abstractUserRepository.findOneByUsername(username);
+        return user.getFullName();
     }
 }

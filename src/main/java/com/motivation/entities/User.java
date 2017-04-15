@@ -10,7 +10,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type")
+public abstract class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +27,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "addedBy")
     private Set<Quote> quotes;
 
-    @ManyToMany
-    @JoinTable(name = "users_quotes",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"))
-    private Set<Quote> likedQuotes;
+//    @ManyToMany
+//    @JoinTable(name = "users_quotes",
+//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"))
+//    private Set<Quote> likedQuotes;
 
     private boolean isAccountNonExpired;
 
@@ -47,7 +49,7 @@ public class User implements UserDetails {
 
     public User() {
         this.quotes = new HashSet<>();
-        this.likedQuotes = new HashSet<>();
+//        this.likedQuotes = new HashSet<>();
     }
 
     @Override
@@ -137,11 +139,11 @@ public class User implements UserDetails {
         this.quotes = quotes;
     }
 
-    public Set<Quote> getLikedQuotes() {
-        return likedQuotes;
-    }
-
-    public void setLikedQuotes(Set<Quote> likedQuotes) {
-        this.likedQuotes = likedQuotes;
-    }
+//    public Set<Quote> getLikedQuotes() {
+//        return likedQuotes;
+//    }
+//
+//    public void setLikedQuotes(Set<Quote> likedQuotes) {
+//        this.likedQuotes = likedQuotes;
+//    }
 }

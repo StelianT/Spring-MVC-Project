@@ -19,15 +19,15 @@ public class Quote {
 
     private String color;
 
-    @ManyToMany(mappedBy = "likedQuotes")
-    private Set<User> likedBy;
+//    @ManyToMany(mappedBy = "likedQuotes")
+//    private Set<User> likedBy;
 
     @ManyToOne
     @JoinColumn(name = "added_by_id", updatable=false)
     private User addedBy;
 
     public Quote() {
-        this.likedBy = new HashSet<>();
+        //this.likedBy = new HashSet<>();
     }
 
     public Quote(String content, String author, String color, User addedBy) {
@@ -78,11 +78,11 @@ public class Quote {
         this.color = color;
     }
 
-    public Set<User> getLikedBy() {
-        return likedBy;
-    }
-
-    public void setLikedBy(Set<User> likedBy) {
-        this.likedBy = likedBy;
-    }
+//    public Set<User> getLikedBy() {
+//        return likedBy;
+//    }
+//
+//    public void setLikedBy(Set<User> likedBy) {
+//        this.likedBy = likedBy;
+//    }
 }

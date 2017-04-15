@@ -1,5 +1,6 @@
 package com.motivation.models.bindingModels;
 
+import com.motivation.entities.BasicUser;
 import com.motivation.entities.User;
 
 public class AddQuoteBindingModel {

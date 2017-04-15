@@ -24,6 +24,11 @@
         </div>
         <input type="submit" class="btn btn-success" value="Log In"/>
     </form>
+    <br />
+    <form action="/connect/facebook" method="post">
+        <input type="hidden" name="scope" value="public_profile, email" />
+        <input class="btn btn-primary" type="submit" value="Facebook" />
+    </form>
 </div>
 
 <footer th:replace="layout :: site-footer" />

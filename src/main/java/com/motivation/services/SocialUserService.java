@@ -1,7 +1,9 @@
 package com.motivation.services;
 
-/**
- * Created by stelt on 14/04/2017.
- */
+
+import org.springframework.social.facebook.api.User;
+
 public interface SocialUserService {
+
+    void registerOrLogin(User facebookUser);
 }

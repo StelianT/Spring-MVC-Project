@@ -1,5 +1,7 @@
 package com.motivation.controllers;
 
+import com.motivation.entities.BasicUser;
+import com.motivation.entities.SocialUser;
 import com.motivation.entities.User;
 import com.motivation.models.bindingModels.AddQuoteBindingModel;
 import com.motivation.models.viewModels.QuoteViewModel;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -30,7 +35,7 @@ public class QuoteController {
     }
 
     @GetMapping("")
-    public String getQuoteHomePage(Model model, @PageableDefault(size = 2) Pageable pageable) {
+    public String getQuoteHomePage(Model model, @PageableDefault(size = 6) Pageable pageable) {
 
 //        List<QuoteViewModel> quotes = this.quoteService.findAllQuotes();
 //        model.addAttribute("quotes", quotes);
@@ -47,10 +52,9 @@ public class QuoteController {
     }
 
     @PostMapping("/add")
-    public String addQuote(@ModelAttribute AddQuoteBindingModel addQuoteBindingModel) {
+    public String addQuote(@ModelAttribute AddQuoteBindingModel addQuoteBindingModel, @AuthenticationPrincipal SocialUser user) {
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        addQuoteBindingModel.setAddedBy((User) principal);
+        addQuoteBindingModel.setAddedBy(user);
 
         this.quoteService.save(addQuoteBindingModel);
 
