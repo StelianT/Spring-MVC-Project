@@ -1,7 +1,10 @@
 package com.motivation.controllers;
 
+import com.motivation.entities.SocialUser;
 import com.motivation.services.SocialUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
@@ -34,6 +37,7 @@ public class FacebookLoginController {
         String userKey = this.connectionRepository.findPrimaryConnection(Facebook.class).getKey().getProviderUserId();
         String[] fields = {"id", "email", "name"};
         User facebookUser = facebook.fetchObject(userKey, User.class, fields);
+
         this.socialUserService.registerOrLogin(facebookUser);
 
         return "redirect:/";

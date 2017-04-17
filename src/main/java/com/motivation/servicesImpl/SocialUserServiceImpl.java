@@ -47,7 +47,7 @@ public class SocialUserServiceImpl implements SocialUserService {
 
     private void loginUser(SocialUser socialUser) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                socialUser.getUsername(), null, socialUser.getAuthorities());
+                socialUser, null, socialUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

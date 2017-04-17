@@ -49,7 +49,7 @@ public abstract class User implements UserDetails {
 
     public User() {
         this.quotes = new HashSet<>();
-//        this.likedQuotes = new HashSet<>();
+        //this.likedQuotes = new HashSet<>();
     }
 
     @Override

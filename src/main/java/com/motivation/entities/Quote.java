@@ -27,7 +27,7 @@ public class Quote {
     private User addedBy;
 
     public Quote() {
-        //this.likedBy = new HashSet<>();
+//        this.likedBy = new HashSet<>();
     }
 
     public Quote(String content, String author, String color, User addedBy) {

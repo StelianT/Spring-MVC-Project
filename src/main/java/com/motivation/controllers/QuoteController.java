@@ -1,11 +1,10 @@
 package com.motivation.controllers;
 
-import com.motivation.entities.BasicUser;
-import com.motivation.entities.SocialUser;
 import com.motivation.entities.User;
 import com.motivation.models.bindingModels.AddQuoteBindingModel;
 import com.motivation.models.viewModels.QuoteViewModel;
 import com.motivation.services.QuoteService;
+import com.motivation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/quotes")
@@ -52,8 +48,12 @@ public class QuoteController {
     }
 
     @PostMapping("/add")
-    public String addQuote(@ModelAttribute AddQuoteBindingModel addQuoteBindingModel, @AuthenticationPrincipal SocialUser user) {
+    public String addQuote(@ModelAttribute AddQuoteBindingModel addQuoteBindingModel) {
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object myUser = (auth != null) ? auth.getPrincipal() :  null;
+
+        User user = (User) myUser;
         addQuoteBindingModel.setAddedBy(user);
 
         this.quoteService.save(addQuoteBindingModel);
