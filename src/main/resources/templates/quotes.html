@@ -24,13 +24,14 @@
                     </blockquote>
                     <span>Added By: </span>
                     <span th:text="*{addedByUsername}"></span>
-                    <div>Liked By:</div>
-                    <div th:each="user : *{likedBy}">
-                        <div th:text="${user.username}"></div>
+                    <div th:id="id + *{id}">
+                        Liked By:
+                        <div th:each="user : *{likedBy}">
+                            <div th:text="${user.username}"></div>
+                        </div>
                     </div>
                 </div>
                 <button onclick="likeQuote(this)" th:value="*{id}">Like</button>
-                <div th:id="'likedIndicator' + *{id}"></div>
             </div>
         </div>
     </div>
@@ -45,6 +46,7 @@
         <li class="page-item" th:classappend="!${quotes.hasNext()} ? 'disabled'"><a class="page-link" href="#" th:href="${quotes.hasNext()} ? '/quotes?page=' + ${quotes.nextPageable().getPageNumber()}">Next</a></li>
     </ul>
 </nav>
+<input id="loggedInUser" type="hidden" th:value="${#authentication.getPrincipal().getUsername()}" />
 
 <footer th:replace="layout :: site-footer" />
 </body>
@@ -57,14 +59,16 @@
         $.ajax({
             type: 'POST',
             url: '/quotes/like/' + quoteId,
-            success: function (quoteId) {
-                addUserToLikes(quoteId);
-            }
+            success: addNewLike(quoteId)
         });
     }
 
-    function addUserToLikes(quoteId) {
-        $('#likedIndicator' + quoteId).text('liked success');
+    function addNewLike(quoteId) {
+        var currentUsername = $('#loggedInUser').val();
+        var newDiv = document.createElement("div");
+        var newContent = document.createTextNode(currentUsername);
+        newDiv.appendChild(newContent);
+        $('#id' + quoteId).append(newDiv);
     }
 
 </script>
