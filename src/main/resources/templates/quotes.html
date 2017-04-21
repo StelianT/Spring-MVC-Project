@@ -24,10 +24,13 @@
                     </blockquote>
                     <span>Added By: </span>
                     <span th:text="*{addedByUsername}"></span>
-                    <div th:each="user : ${userIdUsername}">
-                        <div th:text="${user}"></div>
+                    <div>Liked By:</div>
+                    <div th:each="user : *{likedBy}">
+                        <div th:text="${user.username}"></div>
                     </div>
                 </div>
+                <button onclick="likeQuote(this)" th:value="*{id}">Like</button>
+                <div th:id="'likedIndicator' + *{id}"></div>
             </div>
         </div>
     </div>
@@ -46,3 +49,22 @@
 <footer th:replace="layout :: site-footer" />
 </body>
 </html>
+
+<script type="text/javascript">
+
+    function likeQuote(elem) {
+        var quoteId = elem.value;
+        $.ajax({
+            type: 'POST',
+            url: '/quotes/like/' + quoteId,
+            success: function (quoteId) {
+                addUserToLikes(quoteId);
+            }
+        });
+    }
+
+    function addUserToLikes(quoteId) {
+        $('#likedIndicator' + quoteId).text('liked success');
+    }
+
+</script>

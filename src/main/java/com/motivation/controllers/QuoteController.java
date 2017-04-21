@@ -9,15 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/quotes")
@@ -38,7 +37,7 @@ public class QuoteController {
 
         Page<QuoteViewModel> quotes = this.quoteService.findAllQuotes(pageable);
         model.addAttribute("quotes", quotes);
-
+        
         return "quotes";
     }
 
@@ -50,14 +49,24 @@ public class QuoteController {
     @PostMapping("/add")
     public String addQuote(@ModelAttribute AddQuoteBindingModel addQuoteBindingModel) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object myUser = (auth != null) ? auth.getPrincipal() :  null;
-
-        User user = (User) myUser;
-        addQuoteBindingModel.setAddedBy(user);
+        addQuoteBindingModel.setAddedBy(getCurrentUser());
 
         this.quoteService.save(addQuoteBindingModel);
 
         return "redirect:/quotes";
+    }
+
+    @PostMapping("/like/{quoteId}")
+    public ResponseEntity likeQuote(@PathVariable long quoteId) {
+        this.quoteService.like(getCurrentUser(), quoteId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    private User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object myUser = (auth != null) ? auth.getPrincipal() :  null;
+
+        return (User) myUser;
     }
 }

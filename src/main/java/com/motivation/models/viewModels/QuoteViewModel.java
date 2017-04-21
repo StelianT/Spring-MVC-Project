@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class QuoteViewModel {
 
+    private Long id;
+
     private String content;
 
     private String author;
@@ -14,9 +16,17 @@ public class QuoteViewModel {
 
     private String addedByUsername;
 
-    private Set<String> userIdUsername;
+    private Set<User> likedBy;
 
     public QuoteViewModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getContent() {
@@ -51,11 +61,11 @@ public class QuoteViewModel {
         this.addedByUsername = addedByUsername;
     }
 
-    public Set<String> getUserIdUsername() {
-        return userIdUsername;
+    public Set<User> getLikedBy() {
+        return likedBy;
     }
 
-    public void setUserIdUsername(Set<String> userIdUsername) {
-        this.userIdUsername = userIdUsername;
+    public void setLikedBy(Set<User> likedBy) {
+        this.likedBy = likedBy;
     }
 }

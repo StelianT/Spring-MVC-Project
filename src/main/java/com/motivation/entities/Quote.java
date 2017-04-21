@@ -1,7 +1,12 @@
 package com.motivation.entities;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,15 +24,18 @@ public class Quote {
 
     private String color;
 
-//    @ManyToMany(mappedBy = "likedQuotes")
-//    private Set<User> likedBy;
+    @ManyToMany()
+    @JoinTable(name = "quotes_users",
+            joinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> likedBy;
 
     @ManyToOne
     @JoinColumn(name = "added_by_id", updatable=false)
     private User addedBy;
 
     public Quote() {
-//        this.likedBy = new HashSet<>();
+        this.likedBy = new HashSet<>();
     }
 
     public Quote(String content, String author, String color, User addedBy) {
@@ -78,11 +86,11 @@ public class Quote {
         this.color = color;
     }
 
-//    public Set<User> getLikedBy() {
-//        return likedBy;
-//    }
-//
-//    public void setLikedBy(Set<User> likedBy) {
-//        this.likedBy = likedBy;
-//    }
+    public Set<User> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(Set<User> likedBy) {
+        this.likedBy = likedBy;
+    }
 }

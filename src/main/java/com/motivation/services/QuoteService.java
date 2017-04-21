@@ -1,5 +1,6 @@
 package com.motivation.services;
 
+import com.motivation.entities.User;
 import com.motivation.models.bindingModels.AddQuoteBindingModel;
 import com.motivation.models.viewModels.QuoteViewModel;
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface QuoteService {
     List<QuoteViewModel> findAllQuotesByUserId(Long userId);
 
     Page<QuoteViewModel> findAllQuotes(Pageable pageable);
+
+    void like(User user, long quoteId);
 }

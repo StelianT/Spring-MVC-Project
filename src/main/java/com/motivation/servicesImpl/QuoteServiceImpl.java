@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class QuoteServiceImpl implements QuoteService {
@@ -75,5 +77,12 @@ public class QuoteServiceImpl implements QuoteService {
         Page<QuoteViewModel> quoteModels = new PageImpl<>(quoteViewModels, pageable,
                                                                         quotes.getTotalElements());
         return quoteModels;
+    }
+
+    @Override
+    public void like(User user, long quoteId) {
+        Quote quote = this.quoteRepository.findOneById(quoteId);
+        quote.getLikedBy().add(user);
+        this.quoteRepository.save(quote);
     }
 }

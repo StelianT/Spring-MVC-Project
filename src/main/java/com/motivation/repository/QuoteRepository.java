@@ -14,4 +14,6 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     List<Quote> findAll();
 
     List<Quote> findAllByAddedById(Long userId);
+
+    Quote findOneById(Long quoteId);
 }

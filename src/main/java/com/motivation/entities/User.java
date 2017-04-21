@@ -27,7 +27,7 @@ public abstract class User implements UserDetails {
     @OneToMany(mappedBy = "addedBy")
     private Set<Quote> quotes;
 
-//    @ManyToMany
+//    @ManyToMany()
 //    @JoinTable(name = "users_quotes",
 //            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 //            inverseJoinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"))
@@ -49,7 +49,7 @@ public abstract class User implements UserDetails {
 
     public User() {
         this.quotes = new HashSet<>();
-        //this.likedQuotes = new HashSet<>();
+//        this.likedQuotes = new HashSet<>();
     }
 
     @Override
