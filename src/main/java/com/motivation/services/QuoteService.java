@@ -19,4 +19,6 @@ public interface QuoteService {
     Page<QuoteViewModel> findAllQuotes(Pageable pageable);
 
     void like(User user, long quoteId);
+
+    void unlike(User user, long quoteId);
 }

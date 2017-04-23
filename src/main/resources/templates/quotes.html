@@ -27,11 +27,11 @@
                     <div th:id="id + *{id}">
                         Liked By:
                         <div th:each="user : *{likedBy}">
-                            <div th:text="${user.username}"></div>
+                            <div th:classappend="${user.id}" th:text="${user.username}"></div>
                         </div>
                     </div>
                 </div>
-                <button onclick="likeQuote(this)" th:value="*{id}">Like</button>
+                <button class="btn-like" onclick="likeQuote(this)" th:value="*{id}">Like</button>
             </div>
         </div>
     </div>
@@ -47,6 +47,7 @@
     </ul>
 </nav>
 <input id="loggedInUser" type="hidden" th:value="${#authentication.getPrincipal().getUsername()}" />
+<input id="loggedInUserId" type="hidden" th:value="${#authentication.getPrincipal().getId()}" />
 
 <footer th:replace="layout :: site-footer" />
 </body>
@@ -65,10 +66,30 @@
 
     function addNewLike(quoteId) {
         var currentUsername = $('#loggedInUser').val();
+        var currentUserId = $('#loggedInUserId').val();
+
         var newDiv = document.createElement("div");
         var newContent = document.createTextNode(currentUsername);
         newDiv.appendChild(newContent);
+        $(newDiv).addClass(currentUserId);
         $('#id' + quoteId).append(newDiv);
+
+        $('button[value=' + quoteId + ']').text('Unlike').attr('onclick', 'unlike(this)');
+    }
+    
+    function unlike(elem) {
+        var quoteId = elem.value;
+        $.ajax({
+            type: 'POST',
+            url: '/quotes/unlike/' + quoteId,
+            success: removeLike(quoteId)
+        });
+    }
+    
+    function removeLike(quoteId) {
+        var currentUserId = $('#loggedInUserId').val();
+        $('#id' + quoteId + ' ' + '.' + currentUserId).remove();
+        $('button[value=' + quoteId + ']').text('Like').attr('onclick', 'likeQuote(this)');
     }
 
 </script>

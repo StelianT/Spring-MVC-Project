@@ -85,4 +85,12 @@ public class QuoteServiceImpl implements QuoteService {
         quote.getLikedBy().add(user);
         this.quoteRepository.save(quote);
     }
+
+    @Override
+    public void unlike(User user, long quoteId) {
+        Quote quote = this.quoteRepository.findOneById(quoteId);
+        quote.getLikedBy().remove(user);
+        this.quoteRepository.findOneById(quoteId).getLikedBy().clear();
+        this.quoteRepository.save(quote);
+    }
 }

@@ -65,6 +65,13 @@ public class QuoteController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PostMapping("/unlike/{quoteId}")
+    public ResponseEntity unlikeQuote(@PathVariable long quoteId) {
+        this.quoteService.unlike(getCurrentUser(), quoteId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object myUser = (auth != null) ? auth.getPrincipal() :  null;
