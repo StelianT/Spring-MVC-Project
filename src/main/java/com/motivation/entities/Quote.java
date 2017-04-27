@@ -24,7 +24,7 @@ public class Quote {
 
     private String color;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "quotes_users",
             joinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))

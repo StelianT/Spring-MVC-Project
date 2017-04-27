@@ -18,6 +18,8 @@ public class QuoteViewModel {
 
     private Set<User> likedBy;
 
+    private boolean isLikedByCurrentUser;
+
     public QuoteViewModel() {
     }
 
@@ -67,5 +69,13 @@ public class QuoteViewModel {
 
     public void setLikedBy(Set<User> likedBy) {
         this.likedBy = likedBy;
+    }
+
+    public boolean getIsLikedByCurrentUser() {
+        return isLikedByCurrentUser;
+    }
+
+    public void setLikedByCurrentUser(boolean likedByCurrentUser) {
+        isLikedByCurrentUser = likedByCurrentUser;
     }
 }

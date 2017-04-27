@@ -83,14 +83,23 @@ public class QuoteServiceImpl implements QuoteService {
     public void like(User user, long quoteId) {
         Quote quote = this.quoteRepository.findOneById(quoteId);
         quote.getLikedBy().add(user);
-        this.quoteRepository.save(quote);
+        this.quoteRepository.saveAndFlush(quote);
     }
 
     @Override
     public void unlike(User user, long quoteId) {
-        Quote quote = this.quoteRepository.findOneById(quoteId);
-        quote.getLikedBy().remove(user);
-        this.quoteRepository.findOneById(quoteId).getLikedBy().clear();
-        this.quoteRepository.save(quote);
+//        Quote quote = this.quoteRepository.findOneById(quoteId);
+//        quote.getLikedBy().remove(user);
+//        this.quoteRepository.findOneById(quoteId).getLikedBy().clear();
+//        this.quoteRepository.save(quote);
+
+        Set<User> usersLikedQuote = this.quoteRepository.findOneById(quoteId).getLikedBy();
+        for (User userInCollection : usersLikedQuote) {
+            if (userInCollection.getUsername().equals(user.getUsername())) {
+                usersLikedQuote.remove(userInCollection);
+                this.quoteRepository.saveAndFlush(this.quoteRepository.findOneById(quoteId));
+                return;
+            }
+        }
     }
 }

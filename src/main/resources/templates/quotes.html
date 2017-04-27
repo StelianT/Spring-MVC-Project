@@ -31,7 +31,8 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn-like" onclick="likeQuote(this)" th:value="*{id}">Like</button>
+                <button th:if="*{isLikedByCurrentUser} == false" class="btn-like" onclick="likeQuote(this)" th:value="*{id}">Like</button>
+                <button th:if="*{isLikedByCurrentUser} == true" class="btn-like" onclick="unlike(this)" th:value="*{id}">Unlike</button>
             </div>
         </div>
     </div>

@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/quotes")
@@ -38,6 +39,18 @@ public class QuoteController {
 //        model.addAttribute("quotes", quotes);
 
         Page<QuoteViewModel> quotes = this.quoteService.findAllQuotes(pageable);
+        User currentUser = getCurrentUser();
+
+        for (QuoteViewModel quote : quotes) {
+            Set<User> likedBy = quote.getLikedBy();
+            boolean isLikedByCurrentUser = false;
+            for (User user : likedBy) {
+                if (user.getUsername().equals(currentUser.getUsername())) {
+                    isLikedByCurrentUser = true;
+                }
+            }
+            quote.setLikedByCurrentUser(isLikedByCurrentUser);
+        }
         model.addAttribute("quotes", quotes);
         
         return "quotes";
