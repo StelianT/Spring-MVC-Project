@@ -27,7 +27,9 @@
                     <div th:id="id + *{id}">
                         Liked By:
                         <div th:each="user : *{likedBy}">
-                            <div th:classappend="${user.id}" th:text="${user.username}"></div>
+                            <a th:href="@{'/user/' + ${user.id}}">
+                                <div th:classappend="${user.id}" th:text="${user.username}"></div>
+                            </a>
                         </div>
                     </div>
                 </div>
