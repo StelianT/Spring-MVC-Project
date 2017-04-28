@@ -24,17 +24,25 @@
                     </blockquote>
                     <span>Added By: </span>
                     <span th:text="*{addedByUsername}"></span>
-                    <div th:id="id + *{id}">
+
+                </div>
+                <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
+                    <div th:id="id + *{id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{id}">
                         Liked By:
-                        <div th:each="user : *{likedBy}">
-                            <a th:href="@{'/user/' + ${user.id}}">
-                                <div th:classappend="${user.id}" th:text="${user.username}"></div>
-                            </a>
+                        <div th:id="*{id}" style="display: none;">
+                            <div th:if="*{#lists.isEmpty(likedBy)}" class="list-group-item">
+                                None
+                            </div>
+                            <div th:each="user : *{likedBy}">
+                                <a th:href="@{'/user/' + ${user.id}}">
+                                    <div class="list-group-item" th:classappend="${user.id}" th:text="${user.username}"></div>
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    <button th:if="*{isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="likeQuote(this)" th:value="*{id}">Like</button>
+                    <button th:if="*{isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="unlike(this)" th:value="*{id}">Unlike</button>
                 </div>
-                <button th:if="*{isLikedByCurrentUser} == false" class="btn-like" onclick="likeQuote(this)" th:value="*{id}">Like</button>
-                <button th:if="*{isLikedByCurrentUser} == true" class="btn-like" onclick="unlike(this)" th:value="*{id}">Unlike</button>
             </div>
         </div>
     </div>
@@ -71,11 +79,16 @@
         var currentUsername = $('#loggedInUser').val();
         var currentUserId = $('#loggedInUserId').val();
 
+        var aTag = document.createElement('a');
+        aTag.setAttribute('href',"/user/" + currentUserId);
+
         var newDiv = document.createElement("div");
         var newContent = document.createTextNode(currentUsername);
         newDiv.appendChild(newContent);
         $(newDiv).addClass(currentUserId);
-        $('#id' + quoteId).append(newDiv);
+        $(newDiv).addClass("list-group-item");
+        aTag.appendChild(newDiv);
+        $('#' + quoteId).append(aTag);
 
         $('button[value=' + quoteId + ']').text('Unlike').attr('onclick', 'unlike(this)');
     }
@@ -93,6 +106,18 @@
         var currentUserId = $('#loggedInUserId').val();
         $('#id' + quoteId + ' ' + '.' + currentUserId).remove();
         $('button[value=' + quoteId + ']').text('Like').attr('onclick', 'likeQuote(this)');
+    }
+
+    function onLikedByHover(elem) {
+        var quoteId = elem.getAttribute('value');
+        document.getElementById(quoteId).style.position = 'absolute';
+        document.getElementById(quoteId).style.zIndex = '1';
+        document.getElementById(quoteId).style.display = 'block';
+    }
+
+    function onLikedByOut(elem) {
+        var quoteId = elem.getAttribute('value');
+        document.getElementById(quoteId).style.display = 'none';
     }
 
 </script>
