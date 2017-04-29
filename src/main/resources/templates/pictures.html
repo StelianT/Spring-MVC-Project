@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
-                    <div th:id="id + ${currPicture.id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" th:classappend="*{#lists.isEmpty(currPicture.likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="${currPicture.id}">
+                    <div th:id="id + ${currPicture.id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-4" th:classappend="*{#lists.isEmpty(currPicture.likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="${currPicture.id}">
                         Liked By:
                         <div th:id="${currPicture.id}" style="display: none;">
                             <div th:each="user : ${currPicture.likedBy}">
@@ -32,8 +32,8 @@
                             </div>
                         </div>
                     </div>
-                    <button th:if="${currPicture.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="likeQuote(this)" th:value="${currPicture.id}">Like</button>
-                    <button th:if="${currPicture.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="unlike(this)" th:value="${currPicture.id}">Unlike</button>
+                    <button th:if="${currPicture.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="likeQuote(this)" th:value="${currPicture.id}">Like</button>
+                    <button th:if="${currPicture.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="unlike(this)" th:value="${currPicture.id}">Unlike</button>
                 </div>
 
             </div>
