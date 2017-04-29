@@ -10,7 +10,28 @@
 <h4>Quotes added by this user: </h4>
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 mb-4" th:each="quote : ${quotes}" th:object="${quote}">
+        <div class="col-sm-6 mb-4" th:each="quote : ${addedQuotes}" th:object="${quote}">
+            <div class="card">
+                <div class="card-header">
+                    Quote
+                </div>
+                <div class="card-block">
+                    <blockquote class="card-blockquote">
+                        <p th:text="*{content}"></p>
+                        <footer class="text-right" th:text="*{author}"></footer>
+                    </blockquote>
+                    <span>Added By: </span>
+                    <span th:text="*{addedByUsername}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>Quotes liked by this user: </h4>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mb-4" th:each="quote : ${likedQuotes}" th:object="${quote}">
             <div class="card">
                 <div class="card-header">
                     Quote

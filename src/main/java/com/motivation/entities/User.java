@@ -27,11 +27,8 @@ public abstract class User implements UserDetails {
     @OneToMany(mappedBy = "addedBy")
     private Set<Quote> quotes;
 
-//    @ManyToMany()
-//    @JoinTable(name = "users_quotes",
-//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "quote_id", referencedColumnName = "id"))
-//    private Set<Quote> likedQuotes;
+    @ManyToMany(cascade=CascadeType.ALL, mappedBy="likedBy", fetch = FetchType.EAGER)
+    private Set<Quote> likedQuotes;
 
     private boolean isAccountNonExpired;
 
@@ -49,7 +46,7 @@ public abstract class User implements UserDetails {
 
     public User() {
         this.quotes = new HashSet<>();
-//        this.likedQuotes = new HashSet<>();
+        this.likedQuotes = new HashSet<>();
     }
 
     @Override
@@ -139,11 +136,11 @@ public abstract class User implements UserDetails {
         this.quotes = quotes;
     }
 
-//    public Set<Quote> getLikedQuotes() {
-//        return likedQuotes;
-//    }
-//
-//    public void setLikedQuotes(Set<Quote> likedQuotes) {
-//        this.likedQuotes = likedQuotes;
-//    }
+    public Set<Quote> getLikedQuotes() {
+        return likedQuotes;
+    }
+
+    public void setLikedQuotes(Set<Quote> likedQuotes) {
+        this.likedQuotes = likedQuotes;
+    }
 }

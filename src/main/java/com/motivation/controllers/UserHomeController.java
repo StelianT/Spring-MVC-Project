@@ -32,10 +32,14 @@ public class UserHomeController {
         Long userId = this.userService.getUserIdByUsername(username);
         String fullName = this.userService.getFullNameByUsername(username);
 
-        List<QuoteViewModel> quotes = this.quoteService.findAllQuotesByUserId(userId);
-        model.addAttribute("quotes", quotes);
+        List<QuoteViewModel> addedQuotes = this.quoteService.findAllQuotesByUserId(userId);
+        List<QuoteViewModel> likedQuotes = this.userService.findAllLikedQuotesByUserId(userId);
+
+        model.addAttribute("addedQuotes", addedQuotes);
+        model.addAttribute("likedQuotes", likedQuotes);
         model.addAttribute("fullName", fullName);
         model.addAttribute("username", username);
+
         return "user";
     }
 

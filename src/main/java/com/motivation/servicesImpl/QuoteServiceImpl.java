@@ -36,7 +36,15 @@ public class QuoteServiceImpl implements QuoteService {
 
     @Override
     public void save(AddQuoteBindingModel addQuoteBindingModel) {
-        Quote quote = this.modelMapper.map(addQuoteBindingModel, Quote.class);
+        //Quote quote = this.modelMapper.map(addQuoteBindingModel, Quote.class);
+
+        Quote quote = new Quote();
+        quote.setContent(addQuoteBindingModel.getContent());
+        quote.setAuthor(addQuoteBindingModel.getAuthor());
+        quote.setColor(addQuoteBindingModel.getColor());
+        quote.setAddedBy(addQuoteBindingModel.getAddedBy());
+        Set<User> likedBy = new HashSet<>();
+        quote.setLikedBy(likedBy);
 
         this.quoteRepository.save(quote);
     }
