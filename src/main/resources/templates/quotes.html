@@ -27,12 +27,9 @@
 
                 </div>
                 <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
-                    <div th:id="id + *{id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{id}">
+                    <div th:id="id + *{id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" th:classappend="*{#lists.isEmpty(likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{id}">
                         Liked By:
                         <div th:id="*{id}" style="display: none;">
-                            <div th:if="*{#lists.isEmpty(likedBy)}" class="list-group-item">
-                                None
-                            </div>
                             <div th:each="user : *{likedBy}">
                                 <a th:href="@{'/user/' + ${user.id}}">
                                     <div class="list-group-item" th:classappend="${user.id}" th:text="${user.username}"></div>
@@ -90,6 +87,8 @@
         aTag.appendChild(newDiv);
         $('#' + quoteId).append(aTag);
 
+        $('#id' + quoteId).removeClass("disabled").attr('isOnlyOneLike', 'true');
+
         $('button[value=' + quoteId + ']').text('Unlike').attr('onclick', 'unlike(this)');
     }
     
@@ -106,6 +105,11 @@
         var currentUserId = $('#loggedInUserId').val();
         $('#id' + quoteId + ' ' + '.' + currentUserId).remove();
         $('button[value=' + quoteId + ']').text('Like').attr('onclick', 'likeQuote(this)');
+
+        var isOnlyOneLike = $('#id' + quoteId).attr('isOnlyOneLike');
+        if (isOnlyOneLike === "true") {
+            $('#id' + quoteId).addClass("disabled");
+        }
     }
 
     function onLikedByHover(elem) {
