@@ -10,14 +10,13 @@ import com.motivation.services.PictureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -26,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/pictures")
@@ -38,6 +38,19 @@ public class PictureController {
     public String getPictureHomePage(Model model) {
 
         List<PictureViewModel> pictures = this.pictureService.findAllPictures();
+
+        User currentUser = getCurrentUser();
+        for (PictureViewModel picture : pictures) {
+            Set<User> likedBy = picture.getLikedBy();
+            boolean isLikedByCurrentUser = false;
+            for (User user : likedBy) {
+                if (user.getUsername().equals(currentUser.getUsername())) {
+                    isLikedByCurrentUser = true;
+                }
+            }
+            picture.setLikedByCurrentUser(isLikedByCurrentUser);
+        }
+
         model.addAttribute("pictures", pictures);
 
         return "pictures";
@@ -68,6 +81,20 @@ public class PictureController {
 //        }
 
         return "redirect:/pictures";
+    }
+
+    @PostMapping("/like/{pictureId}")
+    public ResponseEntity likeQuote(@PathVariable long pictureId) {
+        this.pictureService.like(getCurrentUser(), pictureId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/unlike/{pictureId}")
+    public ResponseEntity unlikeQuote(@PathVariable long pictureId) {
+        this.pictureService.unlike(getCurrentUser(), pictureId);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     private User getCurrentUser() {

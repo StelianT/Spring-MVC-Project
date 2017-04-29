@@ -12,17 +12,41 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 mb-4" th:each="myPicture : ${pictures}">
+        <div class="col-sm-6 mb-4" th:each="currPicture : ${pictures}">
             <div class="card" style="width: 20rem;">
-                <img style="width: inherit; height: auto" th:src="@{'data:image/png;base64,'+${myPicture.picture}}" />
+                <img style="width: inherit; height: auto" th:src="@{'data:image/png;base64,'+${currPicture.picture}}" />
                 <div class="card-block">
-                    <h4 th:text="${myPicture.title}" class="card-title"></h4>
+                    <h4 th:text="${currPicture.title}" class="card-title"></h4>
+                    <span>Added By: </span>
+                    <span th:text="${currPicture.addedByUsername}"></span>
                 </div>
+
+                <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
+                    <div th:id="id + ${currPicture.id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" th:classappend="*{#lists.isEmpty(currPicture.likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="${currPicture.id}">
+                        Liked By:
+                        <div th:id="${currPicture.id}" style="display: none;">
+                            <div th:each="user : ${currPicture.likedBy}">
+                                <a th:href="@{'/user/' + ${user.id}}">
+                                    <div class="list-group-item" th:classappend="${user.id}" th:text="${user.username}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <button th:if="${currPicture.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="likeQuote(this)" th:value="${currPicture.id}">Like</button>
+                    <button th:if="${currPicture.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="unlike(this)" th:value="${currPicture.id}">Unlike</button>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
+<input id="loggedInUser" type="hidden" th:value="${#authentication.getPrincipal().getUsername()}" />
+<input id="loggedInUserId" type="hidden" th:value="${#authentication.getPrincipal().getId()}" />
+
 <footer th:replace="layout :: site-footer" />
+
+<script th:src="@{scripts/likePictureFunctionality.js}"></script>
+
 </body>
 </html>

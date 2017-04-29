@@ -1,6 +1,7 @@
 package com.motivation.servicesImpl;
 
 import com.motivation.entities.Picture;
+import com.motivation.entities.User;
 import com.motivation.models.bindingModels.AddPictureBindingModel;
 import com.motivation.models.viewModels.PictureViewModel;
 import com.motivation.repository.PictureRepository;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PictureServiceImpl implements PictureService {
@@ -39,6 +41,8 @@ public class PictureServiceImpl implements PictureService {
             e.printStackTrace();
         }
 
+        picture.setAddedBy(addPictureBindingModel.getAddedBy());
+
         this.pictureRepository.save(picture);
     }
 
@@ -52,9 +56,31 @@ public class PictureServiceImpl implements PictureService {
             model.setTitle(picture.getTitle());
             String encodedPicture = Base64.getEncoder().encodeToString(picture.getPicture());
             model.setPicture(encodedPicture);
+            model.setAddedByUsername(picture.getAddedBy().getUsername());
+            model.setLikedBy(picture.getLikedBy());
+            model.setId(picture.getId());
             models.add(model);
         }
 
         return models;
+    }
+
+    @Override
+    public void like(User user, long pictureId) {
+        Picture picture = this.pictureRepository.findOneById(pictureId);
+        picture.getLikedBy().add(user);
+        this.pictureRepository.saveAndFlush(picture);
+    }
+
+    @Override
+    public void unlike(User user, long pictureId) {
+        Set<User> usersLikedQuote = this.pictureRepository.findOneById(pictureId).getLikedBy();
+        for (User userInCollection : usersLikedQuote) {
+            if (userInCollection.getUsername().equals(user.getUsername())) {
+                usersLikedQuote.remove(userInCollection);
+                this.pictureRepository.saveAndFlush(this.pictureRepository.findOneById(pictureId));
+                return;
+            }
+        }
     }
 }

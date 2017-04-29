@@ -13,4 +13,6 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
 
     @Query(value = "SELECT q FROM Picture AS q")
     List<Picture> findAll();
+
+    Picture findOneById(Long pictureId);
 }
