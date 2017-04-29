@@ -18,7 +18,7 @@
                         <div class="navbar-nav">
                             <a sec:authorize="isAuthenticated()" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}" href="/">Home</a>
                             <a sec:authorize="isAuthenticated()" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/quotes' ? 'active':''}" href="/quotes">Quotes</a>
-                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="#">Pictures</a>
+                            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/pictures' ? 'active':''}" href="/pictures">Pictures</a>
                             <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="#">Stories</a>
                             <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="#">Places</a>
                             <a sec:authorize="isAuthenticated()" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/user' ? 'active':''}" href="/user">User</a>

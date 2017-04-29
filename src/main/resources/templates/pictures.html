@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head" />
+<body>
+<header th:replace="layout :: site-header" />
+
+<div style="text-align:center" class="mb-5">
+    <a href="/pictures/add">
+        <button type="button" class="btn btn-primary">Add Picture</button>
+    </a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mb-4" th:each="myPicture : ${pictures}">
+            <div class="card" style="width: 20rem;">
+                <img style="width: inherit; height: auto" th:src="@{'data:image/png;base64,'+${myPicture.picture}}" />
+                <div class="card-block">
+                    <h4 th:text="${myPicture.title}" class="card-title"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+</html>
