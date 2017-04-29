@@ -52,14 +52,7 @@ public class PictureServiceImpl implements PictureService {
         List<Picture> pictures = this.pictureRepository.findAll();
         for (Picture picture : pictures) {
             //PictureViewModel model = this.modelMapper.map(picture, PictureViewModel.class);
-            PictureViewModel model = new PictureViewModel();
-            model.setTitle(picture.getTitle());
-            String encodedPicture = Base64.getEncoder().encodeToString(picture.getPicture());
-            model.setPicture(encodedPicture);
-            model.setAddedByUsername(picture.getAddedBy().getUsername());
-            model.setLikedBy(picture.getLikedBy());
-            model.setId(picture.getId());
-            models.add(model);
+            models.add(PictureViewModelMapper(picture));
         }
 
         return models;
@@ -74,13 +67,38 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public void unlike(User user, long pictureId) {
-        Set<User> usersLikedQuote = this.pictureRepository.findOneById(pictureId).getLikedBy();
-        for (User userInCollection : usersLikedQuote) {
+        Set<User> usersLikedPicture = this.pictureRepository.findOneById(pictureId).getLikedBy();
+        for (User userInCollection : usersLikedPicture) {
             if (userInCollection.getUsername().equals(user.getUsername())) {
-                usersLikedQuote.remove(userInCollection);
+                usersLikedPicture.remove(userInCollection);
                 this.pictureRepository.saveAndFlush(this.pictureRepository.findOneById(pictureId));
                 return;
             }
         }
+    }
+
+    @Override
+    public List<PictureViewModel> findAllPicturesByUserId(Long userId) {
+        List<PictureViewModel> models = new ArrayList<>();
+        List<Picture> pictures = this.pictureRepository.findAllByAddedById(userId);
+        for (Picture picture : pictures) {
+            //PictureViewModel model = this.modelMapper.map(picture, PictureViewModel.class);
+            models.add(PictureViewModelMapper(picture));
+        }
+
+        return models;
+    }
+
+    private PictureViewModel PictureViewModelMapper(Picture picture) {
+
+        PictureViewModel model = new PictureViewModel();
+        model.setTitle(picture.getTitle());
+        String encodedPicture = Base64.getEncoder().encodeToString(picture.getPicture());
+        model.setPicture(encodedPicture);
+        model.setAddedByUsername(picture.getAddedBy().getUsername());
+        model.setLikedBy(picture.getLikedBy());
+        model.setId(picture.getId());
+
+        return model;
     }
 }

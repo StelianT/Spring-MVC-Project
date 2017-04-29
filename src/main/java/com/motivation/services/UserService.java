@@ -1,5 +1,6 @@
 package com.motivation.services;
 
+import com.motivation.models.viewModels.PictureViewModel;
 import com.motivation.models.viewModels.QuoteViewModel;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface UserService {
     String getUsernameByUserId(Long userId);
 
     List<QuoteViewModel> findAllLikedQuotesByUserId(Long userId);
+
+    List<PictureViewModel> findAllLikedPicturesByUserId(Long userId);
 }

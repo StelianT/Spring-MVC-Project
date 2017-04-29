@@ -30,6 +30,9 @@ public abstract class User implements UserDetails {
     @ManyToMany(cascade=CascadeType.ALL, mappedBy="likedBy", fetch = FetchType.EAGER)
     private Set<Quote> likedQuotes;
 
+    @ManyToMany(cascade=CascadeType.ALL, mappedBy="likedBy", fetch = FetchType.EAGER)
+    private Set<Picture> likedPictures;
+
     private boolean isAccountNonExpired;
 
     private boolean isAccountNonLocked;
@@ -47,6 +50,7 @@ public abstract class User implements UserDetails {
     public User() {
         this.quotes = new HashSet<>();
         this.likedQuotes = new HashSet<>();
+        this.likedPictures = new HashSet<>();
     }
 
     @Override
@@ -142,5 +146,13 @@ public abstract class User implements UserDetails {
 
     public void setLikedQuotes(Set<Quote> likedQuotes) {
         this.likedQuotes = likedQuotes;
+    }
+
+    public Set<Picture> getLikedPictures() {
+        return likedPictures;
+    }
+
+    public void setLikedPictures(Set<Picture> likedPictures) {
+        this.likedPictures = likedPictures;
     }
 }

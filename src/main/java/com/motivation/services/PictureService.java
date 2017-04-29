@@ -15,4 +15,6 @@ public interface PictureService {
     void like(User user, long pictureId);
 
     void unlike(User user, long pictureId);
+
+    List<PictureViewModel> findAllPicturesByUserId(Long userId);
 }

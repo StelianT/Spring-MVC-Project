@@ -15,4 +15,6 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
     List<Picture> findAll();
 
     Picture findOneById(Long pictureId);
+
+    List<Picture> findAllByAddedById(Long userId);
 }

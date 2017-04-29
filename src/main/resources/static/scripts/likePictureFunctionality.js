@@ -31,7 +31,7 @@ function unlike(elem) {
     var pictureId = elem.value;
     $.ajax({
         type: 'POST',
-        url: '/quotes/unlike/' + pictureId,
+        url: '/pictures/unlike/' + pictureId,
         success: removeLike(pictureId)
     });
 }

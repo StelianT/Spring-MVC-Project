@@ -1,6 +1,8 @@
 package com.motivation.controllers;
 
+import com.motivation.models.viewModels.PictureViewModel;
 import com.motivation.models.viewModels.QuoteViewModel;
+import com.motivation.services.PictureService;
 import com.motivation.services.QuoteService;
 import com.motivation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,43 +21,46 @@ public class UserHomeController {
 
     private final QuoteService quoteService;
     private final UserService userService;
+    private final PictureService pictureService;
 
     @Autowired
-    public UserHomeController(QuoteService quoteService, UserService userService) {
+    public UserHomeController(QuoteService quoteService, UserService userService, PictureService pictureService) {
         this.quoteService = quoteService;
         this.userService = userService;
+        this.pictureService = pictureService;
     }
 
     @GetMapping("")
     public String getCurrentUserPage(Model model, Principal principal){
         String username = principal.getName();
         Long userId = this.userService.getUserIdByUsername(username);
-        String fullName = this.userService.getFullNameByUsername(username);
-
-        List<QuoteViewModel> addedQuotes = this.quoteService.findAllQuotesByUserId(userId);
-        List<QuoteViewModel> likedQuotes = this.userService.findAllLikedQuotesByUserId(userId);
-
-        model.addAttribute("addedQuotes", addedQuotes);
-        model.addAttribute("likedQuotes", likedQuotes);
-        model.addAttribute("fullName", fullName);
-        model.addAttribute("username", username);
+        getUserPage(userId, model);
 
         return "user";
     }
 
     @GetMapping("/{userId}")
     public String getUserPageByUserId(@PathVariable long userId, Model model) {
+        getUserPage(userId, model);
+
+        return "user";
+    }
+
+    private void getUserPage(long userId, Model model) {
         String username = this.userService.getUsernameByUserId(userId);
         String fullName = this.userService.getFullNameByUserId(userId);
 
         List<QuoteViewModel> addedQuotes = this.quoteService.findAllQuotesByUserId(userId);
         List<QuoteViewModel> likedQuotes = this.userService.findAllLikedQuotesByUserId(userId);
+        List<PictureViewModel> addedPictures = this.pictureService.findAllPicturesByUserId(userId);
+        List<PictureViewModel> likedPictures = this.userService.findAllLikedPicturesByUserId(userId);
 
         model.addAttribute("addedQuotes", addedQuotes);
         model.addAttribute("likedQuotes", likedQuotes);
+        model.addAttribute("addedPictures", addedPictures);
+        model.addAttribute("likedPictures", likedPictures);
+
         model.addAttribute("fullName", fullName);
         model.addAttribute("username", username);
-
-        return "user";
     }
 }
