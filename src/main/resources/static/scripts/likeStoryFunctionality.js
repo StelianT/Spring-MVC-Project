@@ -39,7 +39,7 @@ function unlike(elem) {
     var storyId = elem.value;
     $.ajax({
         type: 'POST',
-        url: '/quotes/unlike/' + storyId,
+        url: '/stories/unlike/' + storyId,
         success: removeLike(storyId)
     });
 }

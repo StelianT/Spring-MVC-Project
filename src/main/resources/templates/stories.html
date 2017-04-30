@@ -18,14 +18,13 @@
                     Story
                 </div>
                 <div class="card-block">
-                    <blockquote class="card-blockquote">
-                        <p th:text="*{content}"></p>
-                        <footer class="text-right" th:text="*{person}"></footer>
-                    </blockquote>
+                    <h4 class="card-title" th:text="*{person}"></h4>
+                    <p class="card-text" th:text="*{content}"></p>
+
                     <span>Added By: </span>
                     <span th:text="*{addedByUsername}"></span>
-
                 </div>
+
                 <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
                     <div th:id="id + *{id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" th:classappend="*{#lists.isEmpty(likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{id}">
                         Liked By:
