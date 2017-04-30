@@ -8,6 +8,9 @@ import com.motivation.repository.PictureRepository;
 import com.motivation.services.PictureService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -56,6 +59,19 @@ public class PictureServiceImpl implements PictureService {
         }
 
         return models;
+    }
+
+    @Override
+    public Page<PictureViewModel> findAllPictures(Pageable pageable) {
+        Page<Picture> pictures = this.pictureRepository.findAll(pageable);
+        List<PictureViewModel> pictureViewModels = new ArrayList<>();
+        for (Picture picture : pictures) {
+            pictureViewModels.add(PictureViewModelMapper(picture));
+        }
+
+        Page<PictureViewModel> pictureModels = new PageImpl<>(pictureViewModels, pageable,
+                pictures.getTotalElements());
+        return pictureModels;
     }
 
     @Override
