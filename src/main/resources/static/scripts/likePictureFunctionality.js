@@ -14,6 +14,8 @@ function addNewLike(pictureId) {
     var aTag = document.createElement('a');
     aTag.setAttribute('href',"/user/" + currentUserId);
 
+    var isOnlyOneLike = !($('#' + pictureId).children.length > 0);
+
     var newDiv = document.createElement("div");
     var newContent = document.createTextNode(currentUsername);
     newDiv.appendChild(newContent);
@@ -22,7 +24,13 @@ function addNewLike(pictureId) {
     aTag.appendChild(newDiv);
     $('#' + pictureId).append(aTag);
 
-    $('#id' + pictureId).removeClass("disabled").attr('isOnlyOneLike', 'true');
+    $('#id' + pictureId).removeClass("disabled");
+
+    if (isOnlyOneLike) {
+        $('#id' + pictureId).attr('isOnlyOneLike', 'true');
+    } else {
+        $('#id' + pictureId).attr('isOnlyOneLike', 'false');
+    }
 
     $('button[value=' + pictureId + ']').text('Unlike').attr('onclick', 'unlike(this)');
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head" />
+<body>
+<header th:replace="layout :: site-header" />
+
+<div style="text-align:center" class="mb-5">
+    <a href="/stories/add">
+        <button type="button" class="btn btn-primary">Add Story</button>
+    </a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mb-4" th:each="story : ${stories}" th:object="${story}">
+            <div class="card">
+                <div class="card-header">
+                    Story
+                </div>
+                <div class="card-block">
+                    <blockquote class="card-blockquote">
+                        <p th:text="*{content}"></p>
+                        <footer class="text-right" th:text="*{person}"></footer>
+                    </blockquote>
+                    <span>Added By: </span>
+                    <span th:text="*{addedByUsername}"></span>
+
+                </div>
+                <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
+                    <div th:id="id + *{id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" th:classappend="*{#lists.isEmpty(likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{id}">
+                        Liked By:
+                        <div th:id="*{id}" style="display: none;">
+                            <div th:each="user : *{likedBy}">
+                                <a th:href="@{'/user/' + ${user.id}}">
+                                    <div class="list-group-item" th:classappend="${user.id}" th:text="${user.username}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <button th:if="*{isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="likeQuote(this)" th:value="*{id}">Like</button>
+                    <button th:if="*{isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="unlike(this)" th:value="*{id}">Unlike</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav aria-label="Page navigation" th:if="${stories.getTotalPages() > 0}">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="!${stories.hasPrevious()} ? 'disabled'"><a class="page-link" href="#" th:href="${stories.hasPrevious()} ? '/stories?page=' + ${stories.previousPageable().getPageNumber()}">Previous</a></li>
+        <li class="page-item" th:each="i : ${#numbers.sequence(0, stories.getTotalPages() - 1)}">
+            <a class="page-link" href="#" th:href="|/stories?page=${i}|" th:text="${i + 1}">1</a>
+        </li>
+        <li class="page-item" th:classappend="!${stories.hasNext()} ? 'disabled'"><a class="page-link" href="#" th:href="${stories.hasNext()} ? '/stories?page=' + ${stories.nextPageable().getPageNumber()}">Next</a></li>
+    </ul>
+</nav>
+<input id="loggedInUser" type="hidden" th:value="${#authentication.getPrincipal().getUsername()}" />
+<input id="loggedInUserId" type="hidden" th:value="${#authentication.getPrincipal().getId()}" />
+
+<footer th:replace="layout :: site-footer" />
+
+<script th:src="@{scripts/likeStoryFunctionality.js}"></script>
+
+</body>
+</html>

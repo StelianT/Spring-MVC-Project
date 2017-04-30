@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head" />
+<body>
+<header th:replace="layout :: site-header" />
+<div class="container">
+    <form class="col-sm-6" method="post" th:object="${addStoryBindingModel}">
+        <div class="form-group row">
+            <label for="quote" class="col-2 col-form-label">Story</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="quote" th:field="*{content}" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="author" class="col-2 col-form-label">Person</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="author" th:field="*{person}" />
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add Story"/>
+    </form>
+</div>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+</html>
