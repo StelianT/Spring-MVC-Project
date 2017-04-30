@@ -32,8 +32,8 @@
                             </div>
                         </div>
                     </div>
-                    <button th:if="${currPicture.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="likeQuote(this)" th:value="${currPicture.id}">Like</button>
-                    <button th:if="${currPicture.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="unlike(this)" th:value="${currPicture.id}">Unlike</button>
+                    <button th:if="${currPicture.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="like(this, 'pictures')" th:value="${currPicture.id}">Like</button>
+                    <button th:if="${currPicture.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="unlike(this, 'pictures')" th:value="${currPicture.id}">Unlike</button>
                 </div>
 
             </div>
@@ -56,7 +56,7 @@
 
 <footer th:replace="layout :: site-footer" />
 
-<script th:src="@{scripts/likePictureFunctionality.js}"></script>
+<script th:src="@{scripts/likeFunctionality.js}"></script>
 
 </body>
 </html>

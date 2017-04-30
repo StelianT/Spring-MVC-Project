@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head" />
+<body>
+<header th:replace="layout :: site-header" />
+
+<div style="text-align:center" class="mb-5">
+    <a href="/movies/add">
+        <button type="button" class="btn btn-primary">Add Movie</button>
+    </a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mb-4" th:each="movie : ${movies}">
+            <div class="card" style="width: 20rem;">
+                <img style="width: inherit; height: auto" th:src="*{movie.posterLink}" />
+                <div class="card-block">
+                    <h4 th:text="*{movie.title}" class="card-title"></h4>
+                    <h6 th:text="'Year: ' + *{movie.year}"></h6>
+                    <h6 th:text="'Genre: ' + *{movie.genre}"></h6>
+                    <div th:text="*{movie.description}"></div>
+                    <span>Added By: </span>
+                    <span th:text="*{movie.addedByUsername}"></span>
+                </div>
+
+                <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
+                    <div th:id="id + *{movie.id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-4" th:classappend="*{#lists.isEmpty(movie.likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{movie.id}">
+                        Liked By:
+                        <div th:id="*{movie.id}" style="display: none;">
+                            <div th:each="user : *{movie.likedBy}">
+                                <a th:href="@{'/user/' + *{user.id}}">
+                                    <div class="list-group-item" th:classappend="*{user.id}" th:text="*{user.username}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <button th:if="${movie.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="like(this, 'movies')" th:value="*{movie.id}">Like</button>
+                    <button th:if="${movie.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="unlike(this, 'movies')" th:value="*{movie.id}">Unlike</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav aria-label="Page navigation" th:if="${movies.getTotalPages() > 0}">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="!${movies.hasPrevious()} ? 'disabled'"><a class="page-link" href="#" th:href="${movies.hasPrevious()} ? '/movies?page=' + ${movies.previousPageable().getPageNumber()}">Previous</a></li>
+        <li class="page-item" th:each="i : ${#numbers.sequence(0, movies.getTotalPages() - 1)}">
+            <a class="page-link" href="#" th:href="|/movies?page=${i}|" th:text="${i + 1}">1</a>
+        </li>
+        <li class="page-item" th:classappend="!${movies.hasNext()} ? 'disabled'"><a class="page-link" href="#" th:href="${movies.hasNext()} ? '/movies?page=' + ${movies.nextPageable().getPageNumber()}">Next</a></li>
+    </ul>
+</nav>
+
+<input id="loggedInUser" type="hidden" th:value="${#authentication.getPrincipal().getUsername()}" />
+<input id="loggedInUserId" type="hidden" th:value="${#authentication.getPrincipal().getId()}" />
+
+<footer th:replace="layout :: site-footer" />
+
+<script th:src="@{scripts/likeFunctionality.js}"></script>
+
+</body>
+</html>
