@@ -7,74 +7,93 @@
 <h1 style="text-align: center;" th:text="${fullName}"></h1>
 <h3 style="text-align: center;" th:text="${username}"></h3>
 
-<h4>Quotes added by this user: </h4>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 mb-4" th:each="quote : ${addedQuotes}" th:object="${quote}">
-            <div class="card">
-                <div class="card-header">
-                    Quote
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a id="quotesButton" class="nav-link active" href="#!" onclick="showQuotes()">Quotes</a>
+    </li>
+    <li class="nav-item">
+        <a id="picturesButton" class="nav-link" href="#!" onclick="showPictures()">Pictures</a>
+    </li>
+    <li class="nav-item">
+        <a id="storiesButton" class="nav-link" href="#!" onclick="showStories()">Stories</a>
+    </li>
+    <li class="nav-item">
+        <a id="moviesButton" class="nav-link" href="#!" onclick="showMovies()">Movies</a>
+    </li>
+</ul>
+
+<div id="quotes">
+    <h4>Quotes added by this user: </h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mb-4" th:each="quote : ${addedQuotes}" th:object="${quote}">
+                <div class="card">
+                    <div class="card-header">
+                        Quote
+                    </div>
+                    <div class="card-block">
+                        <blockquote class="card-blockquote">
+                            <p th:text="*{content}"></p>
+                            <footer class="text-right" th:text="*{author}"></footer>
+                        </blockquote>
+                        <span>Added By: </span>
+                        <span th:text="*{addedByUsername}"></span>
+                    </div>
                 </div>
-                <div class="card-block">
-                    <blockquote class="card-blockquote">
-                        <p th:text="*{content}"></p>
-                        <footer class="text-right" th:text="*{author}"></footer>
-                    </blockquote>
-                    <span>Added By: </span>
-                    <span th:text="*{addedByUsername}"></span>
+            </div>
+        </div>
+    </div>
+
+    <h4>Quotes liked by this user: </h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mb-4" th:each="quote : ${likedQuotes}" th:object="${quote}">
+                <div class="card">
+                    <div class="card-header">
+                        Quote
+                    </div>
+                    <div class="card-block">
+                        <blockquote class="card-blockquote">
+                            <p th:text="*{content}"></p>
+                            <footer class="text-right" th:text="*{author}"></footer>
+                        </blockquote>
+                        <span>Added By: </span>
+                        <span th:text="*{addedByUsername}"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<h4>Quotes liked by this user: </h4>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 mb-4" th:each="quote : ${likedQuotes}" th:object="${quote}">
-            <div class="card">
-                <div class="card-header">
-                    Quote
-                </div>
-                <div class="card-block">
-                    <blockquote class="card-blockquote">
-                        <p th:text="*{content}"></p>
-                        <footer class="text-right" th:text="*{author}"></footer>
-                    </blockquote>
-                    <span>Added By: </span>
-                    <span th:text="*{addedByUsername}"></span>
+<div id="pictures" style="display: none">
+    <h4>Pictures added by this user: </h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mb-4" th:each="currPicture : ${addedPictures}">
+                <div class="card" style="width: 20rem;">
+                    <img style="width: inherit; height: auto" th:src="@{'data:image/png;base64,'+${currPicture.picture}}" />
+                    <div class="card-block">
+                        <h4 th:text="${currPicture.title}" class="card-title"></h4>
+                        <span>Added By: </span>
+                        <span th:text="${currPicture.addedByUsername}"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<h4>Pictures added by this user: </h4>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 mb-4" th:each="currPicture : ${addedPictures}">
-            <div class="card" style="width: 20rem;">
-                <img style="width: inherit; height: auto" th:src="@{'data:image/png;base64,'+${currPicture.picture}}" />
-                <div class="card-block">
-                    <h4 th:text="${currPicture.title}" class="card-title"></h4>
-                    <span>Added By: </span>
-                    <span th:text="${currPicture.addedByUsername}"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<h4>Pictures liked by this user: </h4>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 mb-4" th:each="currPicture : ${likedPictures}">
-            <div class="card" style="width: 20rem;">
-                <img style="width: inherit; height: auto" th:src="@{'data:image/png;base64,'+${currPicture.picture}}" />
-                <div class="card-block">
-                    <h4 th:text="${currPicture.title}" class="card-title"></h4>
-                    <span>Added By: </span>
-                    <span th:text="${currPicture.addedByUsername}"></span>
+    <h4>Pictures liked by this user: </h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mb-4" th:each="currPicture : ${likedPictures}">
+                <div class="card" style="width: 20rem;">
+                    <img style="width: inherit; height: auto" th:src="@{'data:image/png;base64,'+${currPicture.picture}}" />
+                    <div class="card-block">
+                        <h4 th:text="${currPicture.title}" class="card-title"></h4>
+                        <span>Added By: </span>
+                        <span th:text="${currPicture.addedByUsername}"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,5 +101,8 @@
 </div>
 
 <footer th:replace="layout :: site-footer" />
+
+<script th:src="@{scripts/userPage.js}"></script>
+
 </body>
 </html>
