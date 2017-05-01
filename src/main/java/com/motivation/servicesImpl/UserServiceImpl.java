@@ -1,10 +1,10 @@
 package com.motivation.servicesImpl;
 
-import com.motivation.entities.Picture;
-import com.motivation.entities.Quote;
-import com.motivation.entities.User;
+import com.motivation.entities.*;
+import com.motivation.models.viewModels.MovieViewModel;
 import com.motivation.models.viewModels.PictureViewModel;
 import com.motivation.models.viewModels.QuoteViewModel;
+import com.motivation.models.viewModels.StoryViewModel;
 import com.motivation.repository.AbstractUserRepository;
 import com.motivation.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -77,6 +77,32 @@ public class UserServiceImpl implements com.motivation.services.UserService {
             model.setId(picture.getId());
 
             models.add(model);
+        }
+
+        return models;
+    }
+
+    @Override
+    public List<StoryViewModel> findAllLikedStoriesByUserId(Long userId) {
+        User user = this.abstractUserRepository.findOne(userId);
+        Set<Story> likedStories = user.getLikedStories();
+        List<StoryViewModel> models = new ArrayList<>();
+        for (Story story : likedStories) {
+            StoryViewModel storyViewModel = this.modelMapper.map(story, StoryViewModel.class);
+            models.add(storyViewModel);
+        }
+
+        return models;
+    }
+
+    @Override
+    public List<MovieViewModel> findAllLikedMoviesByUserId(Long userId) {
+        User user = this.abstractUserRepository.findOne(userId);
+        Set<Movie> likedMovies = user.getLikedMovies();
+        List<MovieViewModel> models = new ArrayList<>();
+        for (Movie movie : likedMovies) {
+            MovieViewModel movieViewModel = this.modelMapper.map(movie, MovieViewModel.class);
+            models.add(movieViewModel);
         }
 
         return models;
