@@ -110,4 +110,19 @@ public class QuoteServiceImpl implements QuoteService {
             }
         }
     }
+
+    @Override
+    public void editQuote(AddQuoteBindingModel addQuoteBindingModel, long quoteId) {
+        Quote quote = this.quoteRepository.getOne(quoteId);
+        quote.setContent(addQuoteBindingModel.getContent());
+        quote.setAuthor(addQuoteBindingModel.getAuthor());
+        quote.setColor(addQuoteBindingModel.getColor());
+        this.quoteRepository.save(quote);
+    }
+
+    @Override
+    public AddQuoteBindingModel getOneById(long quoteId) {
+        Quote quote =  this.quoteRepository.getOne(quoteId);
+        return this.modelMapper.map(quote, AddQuoteBindingModel.class);
+    }
 }

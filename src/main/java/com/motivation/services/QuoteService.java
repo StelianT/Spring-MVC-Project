@@ -1,5 +1,6 @@
 package com.motivation.services;
 
+import com.motivation.entities.Quote;
 import com.motivation.entities.User;
 import com.motivation.models.bindingModels.AddQuoteBindingModel;
 import com.motivation.models.viewModels.QuoteViewModel;
@@ -21,4 +22,8 @@ public interface QuoteService {
     void like(User user, long quoteId);
 
     void unlike(User user, long quoteId);
+
+    void editQuote(AddQuoteBindingModel addQuoteBindingModel, long quoteId);
+
+    AddQuoteBindingModel getOneById(long quoteId);
 }

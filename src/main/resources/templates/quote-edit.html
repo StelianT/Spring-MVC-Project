@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head" />
+<body>
+<header th:replace="layout :: site-header" />
+<div class="container">
+    <form class="col-sm-6" method="post" th:object="${addQuoteBindingModel}">
+        <div class="form-group row">
+            <label for="quote" class="col-2 col-form-label">Quote</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="quote" th:field="*{content}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="author" class="col-2 col-form-label">Author</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="author" th:field="*{author}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="color" class="col-2 col-form-label">Color</label>
+            <div class="col-10">
+                <input type="color" id="color" th:field="*{color}" />
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Edit Quote"/>
+    </form>
+</div>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+</html>

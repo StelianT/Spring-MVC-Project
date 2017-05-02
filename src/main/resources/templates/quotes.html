@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 mb-4" th:each="quote : ${quotes}" th:object="${quote}">
-            <div class="card">
+            <div class="card" th:id="entity + *{id}">
                 <div class="card-header">
                     Quote
                 </div>
@@ -26,8 +26,8 @@
                     <span th:text="*{addedByUsername}"></span>
 
                 </div>
-                <div class="row justify-content-between" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
-                    <div th:id="id + *{id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2" th:classappend="*{#lists.isEmpty(likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{id}">
+                <div class="row justify-content-end" style="padding-right: 24px; padding-bottom: 9px; padding-left: 24px">
+                    <div th:id="id + *{id}" class="btn btn-secondary btn-sm dropdown-toggle col-sm-2 mr-auto" th:classappend="*{#lists.isEmpty(likedBy)} ? 'disabled' : 'enabled'" onmouseover="onLikedByHover(this)" onmouseout="onLikedByOut(this)" th:value="*{id}">
                         Liked By:
                         <div th:id="*{id}" style="display: none;">
                             <div th:each="user : *{likedBy}">
@@ -39,6 +39,7 @@
                     </div>
                     <button th:if="${quote.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="like(this, 'quotes')" th:value="*{id}">Like</button>
                     <button th:if="${quote.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-2" onclick="unlike(this, 'quotes')" th:value="*{id}">Unlike</button>
+                    <a th:if="${quote.addedByUsername == #authentication.getPrincipal().getUsername()}" class="btn btn-warning btn-sm col-sm-2" th:href="@{/quotes/edit/} + *{id}" style="margin-left: 5px;">Edit</a>
                 </div>
             </div>
         </div>

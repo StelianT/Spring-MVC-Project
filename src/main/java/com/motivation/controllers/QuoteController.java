@@ -1,5 +1,6 @@
 package com.motivation.controllers;
 
+import com.motivation.entities.Quote;
 import com.motivation.entities.User;
 import com.motivation.models.bindingModels.AddQuoteBindingModel;
 import com.motivation.models.viewModels.QuoteViewModel;
@@ -26,10 +27,12 @@ import java.util.Set;
 public class QuoteController {
 
     private final QuoteService quoteService;
+    private final UserService userService;
 
     @Autowired
-    public QuoteController(QuoteService quoteService) {
+    public QuoteController(QuoteService quoteService, UserService userService) {
         this.quoteService = quoteService;
+        this.userService = userService;
     }
 
     @GetMapping("")
@@ -83,6 +86,25 @@ public class QuoteController {
         this.quoteService.unlike(getCurrentUser(), quoteId);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/edit/{quoteId}")
+    public String deleteQuote(@PathVariable long quoteId, Model model) {
+        AddQuoteBindingModel quote = this.quoteService.getOneById(quoteId);
+        model.addAttribute("addQuoteBindingModel", quote);
+
+        return "quote-edit";
+    }
+
+    @PostMapping("/edit/{quoteId}")
+    public String editQuote(@ModelAttribute AddQuoteBindingModel addQuoteBindingModel, @PathVariable long quoteId) {
+        if (this.quoteService.getOneById(quoteId).getAddedBy().getId() != getCurrentUser().getId()) {
+            return "error/access-denied";
+        }
+
+        this.quoteService.editQuote(addQuoteBindingModel, quoteId);
+
+        return "redirect:/quotes";
     }
 
     private User getCurrentUser() {
