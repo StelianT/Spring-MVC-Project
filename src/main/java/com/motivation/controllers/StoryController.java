@@ -79,6 +79,25 @@ public class StoryController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @GetMapping("/edit/{storyId}")
+    public String editStory(@PathVariable long storyId, Model model) {
+        AddStoryBindingModel story = this.storyService.getOneById(storyId);
+        model.addAttribute("addStoryBindingModel", story);
+
+        return "story-edit";
+    }
+
+    @PostMapping("/edit/{storyId}")
+    public String editStory(@ModelAttribute AddStoryBindingModel addStoryBindingModel, @PathVariable long storyId) {
+        if (this.storyService.getOneById(storyId).getAddedBy().getId() != getCurrentUser().getId()) {
+            return "error/access-denied";
+        }
+
+        this.storyService.editStory(addStoryBindingModel, storyId);
+
+        return "redirect:/stories";
+    }
+
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object myUser = (auth != null) ? auth.getPrincipal() :  null;

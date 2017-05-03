@@ -99,4 +99,18 @@ public class StoryServiceImpl implements StoryService {
             }
         }
     }
+
+    @Override
+    public AddStoryBindingModel getOneById(long storyId) {
+        Story story =  this.storyRepository.getOne(storyId);
+        return this.modelMapper.map(story, AddStoryBindingModel.class);
+    }
+
+    @Override
+    public void editStory(AddStoryBindingModel addQuoteBindingModel, long storyId) {
+        Story story = this.storyRepository.getOne(storyId);
+        story.setPerson(addQuoteBindingModel.getPerson());
+        story.setContent(addQuoteBindingModel.getContent());
+        this.storyRepository.save(story);
+    }
 }

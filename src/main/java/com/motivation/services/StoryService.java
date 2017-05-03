@@ -21,4 +21,8 @@ public interface StoryService {
     void like(User user, long storyId);
 
     void unlike(User user, long storyId);
+
+    AddStoryBindingModel getOneById(long storyId);
+
+    void editStory(AddStoryBindingModel addQuoteBindingModel, long storyId);
 }
