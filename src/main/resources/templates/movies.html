@@ -37,6 +37,7 @@
                     </div>
                     <button th:if="${movie.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="like(this, 'movies')" th:value="*{movie.id}">Like</button>
                     <button th:if="${movie.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="unlike(this, 'movies')" th:value="*{movie.id}">Unlike</button>
+                    <a th:if="${movie.addedByUsername == #authentication.getPrincipal().getUsername()}" class="btn btn-warning btn-sm col-sm-2" th:href="@{/movies/edit/} + *{movie.id}" style="margin-left: 5px;">Edit</a>
                 </div>
 
             </div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head" />
+<body>
+<header th:replace="layout :: site-header" />
+<div class="container">
+    <form class="col-sm-10" method="post" th:object="${addMovieBindingModel}">
+        <div class="form-group row">
+            <label for="movie" class="col-2 col-form-label">Movie Title</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="movie" th:field="*{title}" />
+            </div>
+            <label for="description" class="col-2 col-form-label">Why you find it motivating or inspiring?</label>
+            <div class="col-10">
+                <input class="form-control" type="text" id="description" th:field="*{description}" />
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Edit Movie"/>
+    </form>
+</div>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+</html>

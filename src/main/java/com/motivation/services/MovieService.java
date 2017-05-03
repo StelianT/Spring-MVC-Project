@@ -21,4 +21,8 @@ public interface MovieService {
     void like(User user, long movieId);
 
     void unlike(User user, long movieId);
+
+    AddMovieBindingModel getOneById(long movieId);
+
+    void editMovie(AddMovieBindingModel addMovieBindingModel, long movieId);
 }

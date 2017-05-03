@@ -79,6 +79,25 @@ public class MovieController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @GetMapping("/edit/{movieId}")
+    public String editMovie(@PathVariable long movieId, Model model) {
+        AddMovieBindingModel movie = this.movieService.getOneById(movieId);
+        model.addAttribute("addMovieBindingModel", movie);
+
+        return "movie-edit";
+    }
+
+    @PostMapping("/edit/{movieId}")
+    public String editMovie(@ModelAttribute AddMovieBindingModel addMovieBindingModel, @PathVariable long movieId) {
+        if (this.movieService.getOneById(movieId).getAddedBy().getId() != getCurrentUser().getId()) {
+            return "error/access-denied";
+        }
+
+        this.movieService.editMovie(addMovieBindingModel, movieId);
+
+        return "redirect:/movies";
+    }
+
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object myUser = (auth != null) ? auth.getPrincipal() :  null;

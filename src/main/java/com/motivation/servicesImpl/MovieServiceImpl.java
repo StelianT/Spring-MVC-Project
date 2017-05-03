@@ -108,6 +108,26 @@ public class MovieServiceImpl implements MovieService {
         }
     }
 
+    @Override
+    public AddMovieBindingModel getOneById(long movieId) {
+        Movie movie =  this.movieRepository.getOne(movieId);
+        return this.modelMapper.map(movie, AddMovieBindingModel.class);
+    }
+
+    @Override
+    public void editMovie(AddMovieBindingModel addMovieBindingModel, long movieId) {
+        Movie movie = this.movieRepository.getOne(movieId);
+
+        try {
+            retrieveMovieInfo(addMovieBindingModel.getTitle(), movie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        movie.setDescription(addMovieBindingModel.getDescription());
+        this.movieRepository.save(movie);
+    }
+
     private void retrieveMovieInfo(String movieTitle, Movie movie) throws Exception {
 
         String url = "http://www.omdbapi.com/?t=" + URLEncoder.encode(movieTitle, "UTF-8");
