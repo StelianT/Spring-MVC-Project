@@ -13,9 +13,8 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 mb-4" th:each="quote : ${quotes}" th:object="${quote}">
-            <div class="card" th:id="entity + *{id}">
-                <div class="card-header">
-                    Quote
+            <div class="card" th:id="entity + *{id}" th:style="'border: 3px solid' + *{color} + ';'">
+                <div class="card-header" th:style="'background-color:' + *{color} + ';'">
                 </div>
                 <div class="card-block">
                     <blockquote class="card-blockquote">
