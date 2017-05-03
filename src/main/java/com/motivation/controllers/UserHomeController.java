@@ -1,16 +1,15 @@
 package com.motivation.controllers;
 
-import com.motivation.models.viewModels.MovieViewModel;
-import com.motivation.models.viewModels.PictureViewModel;
-import com.motivation.models.viewModels.QuoteViewModel;
-import com.motivation.models.viewModels.StoryViewModel;
+import com.motivation.entities.User;
+import com.motivation.models.bindingModels.AddLifeGoalBindingModel;
+import com.motivation.models.viewModels.*;
 import com.motivation.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -37,7 +36,8 @@ public class UserHomeController {
     }
 
     @GetMapping("")
-    public String getCurrentUserPage(Model model, Principal principal){
+    public String getCurrentUserPage(Model model, Principal principal,
+                                     @ModelAttribute AddLifeGoalBindingModel addLifeGoalBindingModel){
         String username = principal.getName();
         Long userId = this.userService.getUserIdByUsername(username);
         getUserPage(userId, model);

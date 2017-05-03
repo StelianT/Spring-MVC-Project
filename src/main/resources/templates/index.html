@@ -1,9 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <head th:replace="layout :: site-head" />
     <body>
         <header th:replace="layout :: site-header" />
 
+        <h2 style="text-align: center">Your Life Goals:</h2>
+        <div sec:authorize="isAuthenticated()" id="lifeGoals">
+            <div class="list-group">
+                <div th:each="lifeGoal : ${lifeGoals}" style="display: inherit">
+                    <div th:id="${lifeGoal.id}" class="list-group-item col-md-8" th:classappend="${lifeGoal.isCompleted} ? 'disabled' : ''">
+                        <div th:text="*{lifeGoal.content}"></div>
+                    </div>
+                    <button th:id="${'button' + lifeGoal.id}" type="button" class="btn btn-success" th:unless="${lifeGoal.isCompleted}" th:onclick="*{'completeLifeGoal(' + lifeGoal.id + ')' }">Completed</button>
+                </div>
+                <form class="form-inline" method="post" th:object="${addLifeGoalBindingModel}">
+                    <input class="form-control col-md-8" type="text" id="lifeGoal" th:field="*{content}" />
+                    <input type="submit" class="btn btn-primary" value="Add New"/>
+                </form>
+            </div>
+        </div>
+
         <footer th:replace="layout :: site-footer" />
     </body>
 </html>
+
+<script>
+    function completeLifeGoal(lifeGoalId) {
+        $.ajax({
+            type: 'POST',
+            url: '/completeLifeGoal/' + lifeGoalId,
+            success: completeLifeGoalDom(lifeGoalId)
+        });
+    }
+
+    function completeLifeGoalDom(lifeGoalId) {
+        $("#" + lifeGoalId).addClass("disabled");
+        $("#button" + lifeGoalId).remove();
+    }
+</script>

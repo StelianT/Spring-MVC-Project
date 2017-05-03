@@ -1,27 +1,27 @@
 function showQuotes() {
-    $('#picturesButton, #storiesButton, #moviesButton').removeClass('active');
+    $('#picturesButton, #storiesButton, #moviesButton, #lifeGoalsButton').removeClass('active');
     $('#quotesButton').addClass('active');
-    $('#pictures, #stories, #movies').css('display', 'none');
+    $('#pictures, #stories, #movies, #lifeGoals').css('display', 'none');
     $('#quotes').css('display', 'block');
 }
 
 function showPictures() {
-    $('#quotesButton, #storiesButton, #moviesButton').removeClass('active');
+    $('#quotesButton, #storiesButton, #moviesButton, #lifeGoalsButton').removeClass('active');
     $('#picturesButton').addClass('active');
-    $('#quotes, #stories, #movies').css('display', 'none');
+    $('#quotes, #stories, #movies, #lifeGoals').css('display', 'none');
     $('#pictures').css('display', 'block');
 }
 
 function showStories() {
-    $('#quotesButton, #picturesButton, #moviesButton').removeClass('active');
+    $('#quotesButton, #picturesButton, #moviesButton, #lifeGoalsButton').removeClass('active');
     $('#storiesButton').addClass('active');
-    $('#quotes, #pictures, #movies').css('display', 'none');
+    $('#quotes, #pictures, #movies, #lifeGoals').css('display', 'none');
     $('#stories').css('display', 'block');
 }
 
 function showMovies() {
-    $('#quotesButton, #picturesButton, #storiesButton').removeClass('active');
+    $('#quotesButton, #picturesButton, #storiesButton, #lifeGoalsButton').removeClass('active');
     $('#moviesButton').addClass('active');
-    $('#quotes, #pictures, #stories').css('display', 'none');
+    $('#quotes, #pictures, #stories, #lifeGoals').css('display', 'none');
     $('#movies').css('display', 'block');
 }
