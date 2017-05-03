@@ -88,17 +88,36 @@ public class PictureController {
     }
 
     @PostMapping("/like/{pictureId}")
-    public ResponseEntity likeQuote(@PathVariable long pictureId) {
+    public ResponseEntity likePicture(@PathVariable long pictureId) {
         this.pictureService.like(getCurrentUser(), pictureId);
 
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/unlike/{pictureId}")
-    public ResponseEntity unlikeQuote(@PathVariable long pictureId) {
+    public ResponseEntity unlikePicture(@PathVariable long pictureId) {
         this.pictureService.unlike(getCurrentUser(), pictureId);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/edit/{pictureId}")
+    public String editPicture(@PathVariable long pictureId, Model model) {
+        AddPictureBindingModel picture = this.pictureService.getOneById(pictureId);
+        model.addAttribute("addPictureBindingModel", picture);
+
+        return "picture-edit";
+    }
+
+    @PostMapping("/edit/{pictureId}")
+    public String editPicture(@ModelAttribute AddPictureBindingModel addPictureBindingModel, @PathVariable long pictureId) {
+        if (this.pictureService.getOneById(pictureId).getAddedBy().getId() != getCurrentUser().getId()) {
+            return "error/access-denied";
+        }
+
+        this.pictureService.editPicture(addPictureBindingModel, pictureId);
+
+        return "redirect:/pictures";
     }
 
     private User getCurrentUser() {

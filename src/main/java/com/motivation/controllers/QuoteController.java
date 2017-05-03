@@ -89,7 +89,7 @@ public class QuoteController {
     }
 
     @GetMapping("/edit/{quoteId}")
-    public String deleteQuote(@PathVariable long quoteId, Model model) {
+    public String editQuote(@PathVariable long quoteId, Model model) {
         AddQuoteBindingModel quote = this.quoteService.getOneById(quoteId);
         model.addAttribute("addQuoteBindingModel", quote);
 

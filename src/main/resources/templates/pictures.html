@@ -34,6 +34,7 @@
                     </div>
                     <button th:if="${currPicture.isLikedByCurrentUser} == false" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="like(this, 'pictures')" th:value="${currPicture.id}">Like</button>
                     <button th:if="${currPicture.isLikedByCurrentUser} == true" type="button" class="btn btn-primary btn-sm col-sm-3" onclick="unlike(this, 'pictures')" th:value="${currPicture.id}">Unlike</button>
+                    <a th:if="${currPicture.addedByUsername == #authentication.getPrincipal().getUsername()}" class="btn btn-warning btn-sm col-sm-3" th:href="@{/pictures/edit/} + *{currPicture.id}">Edit</a>
                 </div>
 
             </div>

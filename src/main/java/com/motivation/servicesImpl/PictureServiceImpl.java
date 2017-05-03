@@ -75,6 +75,24 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
+    public AddPictureBindingModel getOneById(long pictureId) {
+        Picture picture =  this.pictureRepository.getOne(pictureId);
+        return this.modelMapper.map(picture, AddPictureBindingModel.class);
+    }
+
+    @Override
+    public void editPicture(AddPictureBindingModel addPictureBindingModel, long pictureId) {
+        Picture picture = this.pictureRepository.getOne(pictureId);
+        try {
+            picture.setPicture(addPictureBindingModel.getPicture().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        picture.setTitle(addPictureBindingModel.getTitle());
+        this.pictureRepository.save(picture);
+    }
+
+    @Override
     public void like(User user, long pictureId) {
         Picture picture = this.pictureRepository.findOneById(pictureId);
         picture.getLikedBy().add(user);

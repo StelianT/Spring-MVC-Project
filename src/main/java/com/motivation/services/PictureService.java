@@ -21,4 +21,8 @@ public interface PictureService {
     List<PictureViewModel> findAllPicturesByUserId(Long userId);
 
     Page<PictureViewModel> findAllPictures(Pageable pageable);
+
+    AddPictureBindingModel getOneById(long pictureId);
+
+    void editPicture(AddPictureBindingModel addPictureBindingModel, long pictureId);
 }
