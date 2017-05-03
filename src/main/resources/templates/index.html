@@ -4,7 +4,7 @@
     <body>
         <header th:replace="layout :: site-header" />
 
-        <h2 style="text-align: center">Your Life Goals:</h2>
+        <h2 sec:authorize="isAuthenticated()" style="text-align: center">Your Life Goals:</h2>
         <div sec:authorize="isAuthenticated()" id="lifeGoals">
             <div class="list-group">
                 <div th:each="lifeGoal : ${lifeGoals}" style="display: inherit">
