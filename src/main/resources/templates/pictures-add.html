@@ -6,8 +6,8 @@
 
 <div class="container">
     <form class="upload-form" method="POST" th:object="${addPictureBindingModel}" enctype="multipart/form-data">
+        <h3>Add Picture that Motivates You</h3>
         Picture to upload (max size 1MB): <input class="upload-file" type="file" data-max-size="1000000" name="picture" th:field="*{picture}" />
-
         Name: <input type="text" name="title" th:field="*{title}" />
 
 

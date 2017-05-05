@@ -14,6 +14,7 @@ public class Story {
 
     private String person;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
