@@ -39,8 +39,7 @@ public class PictureController {
 
     @GetMapping("")
     public String getPictureHomePage(Model model, @PageableDefault(size = 6) Pageable pageable) {
-
-        //List<PictureViewModel> pictures = this.pictureService.findAllPictures();
+        
         Page<PictureViewModel> pictures = this.pictureService.findAllPictures(pageable);
         User currentUser = getCurrentUser();
 
@@ -70,19 +69,6 @@ public class PictureController {
 
         addPictureBindingModel.setAddedBy(getCurrentUser());
         this.pictureService.save(addPictureBindingModel);
-
-//        MultipartFile fileUpload = addPictureBindingModel.getPicture();
-//        String name = addPictureBindingModel.getTitle();
-//
-//        if (fileUpload != null && fileUpload.getSize() > 0) {
-//
-//                System.out.println("Saving file: " + fileUpload.getOriginalFilename());
-//
-//                Picture uploadFile = new Picture();
-//                uploadFile.setFileName(name);
-//                uploadFile.setData(fileUpload.getBytes());
-//                fileUploadDAO.save(uploadFile);
-//        }
 
         return "redirect:/pictures";
     }

@@ -16,11 +16,15 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements com.motivation.services.UserService {
 
-    @Autowired
-    private AbstractUserRepository abstractUserRepository;
+    private final AbstractUserRepository abstractUserRepository;
+
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private ModelMapper modelMapper;
+    public UserServiceImpl(AbstractUserRepository abstractUserRepository, ModelMapper modelMapper) {
+        this.abstractUserRepository = abstractUserRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public Long getUserIdByUsername(String username) {

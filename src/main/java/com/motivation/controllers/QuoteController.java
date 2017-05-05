@@ -27,19 +27,14 @@ import java.util.Set;
 public class QuoteController {
 
     private final QuoteService quoteService;
-    private final UserService userService;
 
     @Autowired
-    public QuoteController(QuoteService quoteService, UserService userService) {
+    public QuoteController(QuoteService quoteService) {
         this.quoteService = quoteService;
-        this.userService = userService;
     }
 
     @GetMapping("")
     public String getQuoteHomePage(Model model, @PageableDefault(size = 6) Pageable pageable) {
-
-//        List<QuoteViewModel> quotes = this.quoteService.findAllQuotes();
-//        model.addAttribute("quotes", quotes);
 
         Page<QuoteViewModel> quotes = this.quoteService.findAllQuotes(pageable);
         User currentUser = getCurrentUser();
